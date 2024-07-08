@@ -1,0 +1,6 @@
+project.ext {
+    modid = "simpledaylengthextender"
+    archives_base_name = "SimpleDayLengthExtender"
+    mod_version = "1.0.0"
+    maven_group = "ovh.cosmicdan.simpledaylengthextender"
+}
