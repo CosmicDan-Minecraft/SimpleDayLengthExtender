@@ -6,11 +6,19 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
+import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelHooks {
+    @Unique
+    private boolean simpleDayLengthExtender_isFirstLevelTick = true;
+    @Unique
+    private TimeTocker simpleDayLengthExtender_dayTocker = null;
+    @Unique
+    private TimeTocker simpleDayLengthExtender_nightTocker = null;
 
     @Shadow
     public abstract ServerLevel getLevel();
@@ -39,7 +47,13 @@ public abstract class ServerLevelHooks {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z")
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
-        if (SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevel().getLevelData()))
+        if (simpleDayLengthExtender_isFirstLevelTick) {
+            simpleDayLengthExtender_isFirstLevelTick = false;
+            simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevel().getLevelData());
+            simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevel().getLevelData());
+        }
+
+        if (SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevel().getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker))
             return original.call(gameRules, gameruleKeyDoDaylight);
         else
             return false;

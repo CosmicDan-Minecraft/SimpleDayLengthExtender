@@ -13,7 +13,9 @@ public final class SimpleDayLengthExtender {
 
     public static ServerConfig serverConfig = null;
 
-    private static boolean firstTick = true;
+    //private static boolean firstTick = true;
+    //public static TimeTocker dayTocker = null;
+    //public static TimeTocker nightTocker = null;
 
     public static void init() {
         // Register common config
@@ -22,13 +24,39 @@ public final class SimpleDayLengthExtender {
         ModPlatformHelper.registerConfig(ModConfig.Type.SERVER, specPairConfigCommon.getRight());
     }
 
-    public static boolean shouldAllowDaylightProgression(final LevelData levelData) {
-        if (firstTick) {
-            firstTick = false;
-            LOGGER.info("World daytime multiplier is x" + serverConfig.dayLengthMultiplier.get());
-            LOGGER.info("World nighttime multiplier is x" + serverConfig.nightLengthMultiplier.get());
+    public static TimeTocker buildNewTocker(LevelData levelData, String phaseName, double phaseMultiplier, int phaseStartInTicks) {
+        LOGGER.info("Using a multiplier of x" + phaseMultiplier + " for " + phaseName);
+        TimeTocker newTocker = new TimeTocker(phaseMultiplier, phaseStartInTicks);
+        LOGGER.info("    - Phase starts at " + newTocker.phaseStartInTicks + " and will advance daylight cycle by " + newTocker.tockerInc + " ticks over " + newTocker.tockerMax + " game ticks on average.");
+        return newTocker;
+    }
+
+    public static TimeTocker buildNewTockerDay(LevelData levelData) {
+        return buildNewTocker(
+                levelData,
+                "Day time",
+                serverConfig.dayLengthMultiplier.get(),
+                serverConfig.dayStartInTicks.get()
+        );
+    }
+
+    public static TimeTocker buildNewTockerNight(LevelData levelData) {
+        return buildNewTocker(
+                levelData,
+                "Night time",
+                serverConfig.nightLengthMultiplier.get(),
+                serverConfig.nightStartInTicks.get()
+        );
+    }
+
+    public static boolean shouldAllowDaylightProgression(LevelData levelData, TimeTocker dayTocker, TimeTocker nightTocker) {
+        boolean shouldAdvanceTime = false;
+        final long timeOfDay = levelData.getDayTime();
+        if (timeOfDay >= nightTocker.phaseStartInTicks) {
+            shouldAdvanceTime = nightTocker.shouldAdvanceTime(levelData);
+        } else {
+            shouldAdvanceTime = dayTocker.shouldAdvanceTime(levelData);
         }
-        boolean allowDaylightProgression = false;
-        return allowDaylightProgression;
+        return shouldAdvanceTime;
     }
 }
