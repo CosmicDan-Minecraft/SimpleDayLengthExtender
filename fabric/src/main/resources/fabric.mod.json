@@ -3,13 +3,13 @@
   "id": "simpledaylengthextender",
   "version": "${version}",
   "name": "Simple Day Length Extender",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "A simple yet compatible mod to extend the day and/or night length in Minecraft. Works by switching the doDaylightCycle gamerule on and off internally, without the need for command blocks (and without any log-spam)",
   "authors": [
-    "Me!"
+    "CosmicDan"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/simple-day-length-extender",
+    "sources": "https://github.com/CosmicDan-Minecraft/SimpleDayLengthExtender"
   },
   "license": "CC0-1.0",
   "icon": "assets/simpledaylengthextender/icon.png",

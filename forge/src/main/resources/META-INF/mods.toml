@@ -1,15 +1,17 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/CosmicDan-Minecraft/SimpleDayLengthExtender/issues"
+license = "LGPLv3"
 
 [[mods]]
 modId = "simpledaylengthextender"
 version = "${version}"
 displayName = "Simple Day Length Extender"
-authors = "Me!"
+authors = "CosmicDan"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+A simple yet compatible mod to extend the day and/or night length in Minecraft. Works by switching the doDaylightCycle gamerule on and off internally, without the need for command blocks (and without any log-spam)
+
+https://www.curseforge.com/minecraft/mc-mods/simple-day-length-extender
 '''
 #logoFile = ""
 
