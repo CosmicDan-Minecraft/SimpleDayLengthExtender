@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'simpledaylengthextender'
+//rootProject.name = 'simpledaylengthextender'
 
 include 'common'
 include 'fabric'

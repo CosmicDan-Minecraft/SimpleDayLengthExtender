@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ovh.cosmicdan.simpledaylengthextender.fabric.ModMainFabric"
+      "ovh.cosmicdan.simpledaylengthextender.fabric.SimpleDayLengthExtenderFabric"
     ],
     "client": [
       "ovh.cosmicdan.simpledaylengthextender.fabric.client.ModMainFabricClient"

@@ -8,7 +8,7 @@ import net.minecraft.world.level.storage.LevelData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import ovh.cosmicdan.simpledaylengthextender.ModMain;
+import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 
 @Mixin(ClientLevel.class)
 public abstract class ClientLevelHooks {
@@ -27,9 +27,8 @@ public abstract class ClientLevelHooks {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z")
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
-        final boolean isDoDaylightCycleRuleEnabled = original.call(gameRules, gameruleKeyDoDaylight);
-        if (ModMain.shouldAllowDaylightProgression(getLevelData()))
-            return isDoDaylightCycleRuleEnabled;
+        if (SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevelData()))
+            return original.call(gameRules, gameruleKeyDoDaylight);
         else
             return false;
     }
