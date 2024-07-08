@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "ovh.cosmicdan.simpledaylengthextender.mixin.injection",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
