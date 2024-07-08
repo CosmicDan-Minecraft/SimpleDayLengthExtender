@@ -41,7 +41,8 @@ public abstract class ClientLevelHooks {
             simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevelData());
         }
 
-        if (SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker))
+        final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
+        if (doDaylightCycle)
             return original.call(gameRules, gameruleKeyDoDaylight);
         else
             return false;

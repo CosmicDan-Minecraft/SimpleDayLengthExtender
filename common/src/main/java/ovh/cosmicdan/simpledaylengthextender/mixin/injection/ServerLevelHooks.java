@@ -2,8 +2,10 @@ package ovh.cosmicdan.simpledaylengthextender.mixin.injection;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,6 +24,9 @@ public abstract class ServerLevelHooks {
 
     @Shadow
     public abstract ServerLevel getLevel();
+
+    @Shadow
+    public abstract @NotNull MinecraftServer getServer();
 
     /**
      *  Wraps the GameRules.RULE_DAYLIGHT check before incrementing day time, only proceeding if we allow it (based on
@@ -47,15 +52,16 @@ public abstract class ServerLevelHooks {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z")
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
+        // TODO: Change it to actually change the gamerule. TFC complains otherwise :\
         if (simpleDayLengthExtender_isFirstLevelTick) {
             simpleDayLengthExtender_isFirstLevelTick = false;
             simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevel().getLevelData());
             simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevel().getLevelData());
         }
 
-        if (SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevel().getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker))
-            return original.call(gameRules, gameruleKeyDoDaylight);
-        else
-            return false;
+        final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevel().getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
+        // TODO: If TFC has the doDaylightCycle-disable-when-no-players config enabled, if so only call this if player count > 0
+        gameRules.getRule(gameruleKeyDoDaylight).set(doDaylightCycle, getServer());
+        return original.call(gameRules, gameruleKeyDoDaylight);
     }
 }
