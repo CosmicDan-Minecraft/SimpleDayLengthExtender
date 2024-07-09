@@ -21,6 +21,12 @@ public abstract class ServerLevelHooks {
     private TimeTocker simpleDayLengthExtender_dayTocker = null;
     @Unique
     private TimeTocker simpleDayLengthExtender_nightTocker = null;
+    @Unique
+    private boolean simpleDayLengthExtender_disableCycleWhenEmpty = true;
+    @Unique
+    private boolean simpleDayLengthExtender_waitingForFirstPlayer = false;
+    @Unique
+    private int simpleDayLengthExtender_playersLastCount = 0;
 
     @Shadow
     public abstract ServerLevel getLevel();
@@ -52,16 +58,49 @@ public abstract class ServerLevelHooks {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z")
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
-        // TODO: Change it to actually change the gamerule. TFC complains otherwise :\
+        // setup initial config if required (first tick of a new level)
         if (simpleDayLengthExtender_isFirstLevelTick) {
             simpleDayLengthExtender_isFirstLevelTick = false;
             simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevel().getLevelData());
             simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevel().getLevelData());
+            simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.serverConfig.disableTimeCycleWhenServerEmpty.get();
+            if (SimpleDayLengthExtender.serverConfig.delayTimeCycleUntilFirstJoin.get()) {
+                simpleDayLengthExtender_waitingForFirstPlayer = true;
+                gameRules.getRule(gameruleKeyDoDaylight).set(false, getServer());
+                SimpleDayLengthExtender.LOGGER.info("World started, doDaylightCycle is delayed until first player join...");
+            }
         }
 
-        final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevel().getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
-        // TODO: If TFC has the doDaylightCycle-disable-when-no-players config enabled, if so only call this if player count > 0
-        gameRules.getRule(gameruleKeyDoDaylight).set(doDaylightCycle, getServer());
+        if (simpleDayLengthExtender_waitingForFirstPlayer) {
+            if (getServer().getPlayerCount() != 0) {
+                // first player joined
+                simpleDayLengthExtender_waitingForFirstPlayer = false;
+                SimpleDayLengthExtender.LOGGER.info("A player has joined, starting doDaylightCycle");
+            }
+        }
+
+        if (!simpleDayLengthExtender_waitingForFirstPlayer) {
+            if (simpleDayLengthExtender_disableCycleWhenEmpty && playersHaveAllLeft()) {
+                // disableCycleWhenEmpty is set and all players have left since last tick
+                gameRules.getRule(gameruleKeyDoDaylight).set(false, getServer());
+                SimpleDayLengthExtender.LOGGER.info("All players left, setting doDaylightCycle to false");
+                simpleDayLengthExtender_waitingForFirstPlayer = true;
+            } else {
+                final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevel().getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
+                gameRules.getRule(gameruleKeyDoDaylight).set(doDaylightCycle, getServer());
+            }
+        }
+
         return original.call(gameRules, gameruleKeyDoDaylight);
+    }
+
+    private boolean playersHaveAllLeft() {
+        boolean allLeft = false;
+        int playersNow = getServer().getPlayerCount();
+        if (playersNow == 0 && simpleDayLengthExtender_playersLastCount != 0) {
+            allLeft = true;
+        }
+        simpleDayLengthExtender_playersLastCount = playersNow;
+        return allLeft;
     }
 }
