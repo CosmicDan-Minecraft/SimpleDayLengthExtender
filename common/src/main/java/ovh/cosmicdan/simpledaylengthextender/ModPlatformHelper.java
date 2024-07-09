@@ -7,4 +7,9 @@ import net.minecraftforge.fml.config.ModConfig;
 public class ModPlatformHelper {
     @ExpectPlatform
     public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {}
+
+    @ExpectPlatform
+    public static boolean isTfcTimeStopEnabled() {
+        return false;
+    }
 }

@@ -63,7 +63,7 @@ public abstract class ServerLevelHooks {
             simpleDayLengthExtender_isFirstLevelTick = false;
             simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevel().getLevelData());
             simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevel().getLevelData());
-            simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.serverConfig.disableTimeCycleWhenServerEmpty.get();
+            simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.shouldDisableCycleWhenEmtpy();
             if (SimpleDayLengthExtender.serverConfig.delayTimeCycleUntilFirstJoin.get()) {
                 simpleDayLengthExtender_waitingForFirstPlayer = true;
                 gameRules.getRule(gameruleKeyDoDaylight).set(false, getServer());

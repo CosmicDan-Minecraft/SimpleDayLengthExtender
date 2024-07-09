@@ -9,4 +9,8 @@ public class ModPlatformHelperImpl {
     public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
         ForgeConfigRegistry.INSTANCE.register(SimpleDayLengthExtender.MOD_ID, type, spec);
     }
+
+    public static boolean isTfcTimeStopEnabled() {
+        return false;
+    }
 }

@@ -59,4 +59,17 @@ public final class SimpleDayLengthExtender {
         }
         return shouldAdvanceTime;
     }
+
+    public static boolean shouldDisableCycleWhenEmtpy() {
+        boolean shouldDisable = SimpleDayLengthExtender.serverConfig.disableTimeCycleWhenServerEmpty.get();
+        if (ModPlatformHelper.isTfcTimeStopEnabled()) {
+            if (shouldDisable == false) {
+                LOGGER.warn("The config setting 'disableTimeCycleWhenServerEmpty' was overridden to true because " +
+                        "TFC's 'enableTimeStopWhenServerEmpty' is also true. To disable this warning, set " +
+                        "'disableTimeCycleWhenServerEmpty' to true or disable TFC's time stop.");
+            }
+            shouldDisable = true;
+        }
+        return shouldDisable;
+    }
 }

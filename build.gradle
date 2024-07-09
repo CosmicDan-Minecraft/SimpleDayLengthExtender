@@ -30,6 +30,16 @@ subprojects {
     //}
     
     repositories {
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+         // Patchouli, Embeddium, JEI, more
+        maven{
+            url = "https://maven.blamejared.com"
+        }
         // Forge Config API Port
         maven {
             name = "Fuzs Mod Resources"
