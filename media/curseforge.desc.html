@@ -79,6 +79,12 @@
 <h2>📜 Changelogs (Update history)</h2></br>
 <br/>
 <div class="spoiler"><p>
+<h5>1.1.0</h5>
+ - Add "delayTimeCycleUntilFirstJoin" config option<br/>
+ - Add "disableTimeCycleWhenServerEmpty" config option<br/>
+ - Improve TFC compatibility (prevent log spam about Calendar stuff)<br/>
+ - [Fabric] Add dependency on Forge Config API Port in metadata
+<br/>
 <h5>1.0.0</h5>
  - Initial release<br/>
 </p></div><br/>
@@ -100,24 +106,34 @@
 <p><em>Note: If running Forge, this config generates under "serverconfig" in your world/save folder </em></p>
 <div class="spoiler"><p>
 <h4>[general]</h4>
-<h5>dayLengthMultiplier:</h5>
- - Multiply the day length by this number. Fractions are supported.<br/>
- - Default is 1.0, range is 1.0 to 100.0<br/>
-<h5>nightLengthMultiplier:</h5>
- - Multiply the night length by this number. Fractions supported.<br/>
- - Default is 1.0, range is 1.0 to 100.0<br/>
+<h5>delayTimeCycleUntilFirstJoin:</h5>
+ - If true (default), the daylight cycle will not start until the first player joins the world.<br/>
+ - Handy for multiplayer and/or heavy modpacks.<br/>
+<h5>disableTimeCycleWhenServerEmpty</h5>
+ - If true (NOT default), doDaylightCycle will be forced to false when the server/world is empty<br/>
+ - Might be useful for multiplayer.<br/>
 <h5>dayStartInTicks:</h5>
  - Start time in ticks to use the day multiplier. Must be less than nightStartInTicks.<br/>
  - Default of 0 represents a standard Minecraft day start of 06:00.<br/>
+<h5>dayLengthMultiplier:</h5>
+ - Multiply the day length by this number. Fractions are supported.<br/>
+ - Default is 1.0, range is 1.0 to 100.0<br/>
 <h5>nightStartInTicks:</h5>
  - Start time in ticks to use the night multiplier.<br/>
  - Default of 13000 represents a standard Minecraft night start of 19:00.<br/>
+<h5>nightLengthMultiplier:</h5>
+ - Multiply the night length by this number. Fractions supported.<br/>
+ - Default is 1.0, range is 1.0 to 100.0<br/>
 <br/>
 </p></div>
 <br/>
 <br/>
 <br/>
 <h2>✔️ Compatibility and Known Issues</h2><br/>
+<br/>
+<p>
+<h4>TerraFirmaCraft</h4>
+ - Works fine. The disableTimeCycleWhenServerEmpty setting will be auto-set to true if TFC's time stop setting is also true.<br/>
 <br/>
 <br/>
 <br/>
