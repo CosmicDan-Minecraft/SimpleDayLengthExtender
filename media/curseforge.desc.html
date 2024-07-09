@@ -1,0 +1,151 @@
+<h2>⏱️ About</h2><br/>
+<p>A simple yet compatible mod to extend the day and/or night length in Minecraft.
+<br/>
+<br/>
+<br/>
+<p>
+<table style="text-align: center; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+    <tr>
+        <th></th>
+        <th>&nbsp;&nbsp;<strong>Older&nbsp;&nbsp;</th>
+        <th>&nbsp;&nbsp;<strong>1.18.2</strong>&nbsp;&nbsp;</th>
+        <th>&nbsp;&nbsp;<strong>1.19.2</strong>&nbsp;&nbsp;</th>
+        <th>&nbsp;&nbsp;<strong>1.19.x</strong>&nbsp;&nbsp;</th>
+        <th>&nbsp;&nbsp;<strong>1.20.1</strong>&nbsp;&nbsp;</th>
+        <th>&nbsp;&nbsp;<strong>1.20.x</strong>&nbsp;&nbsp;</th>
+        <th>&nbsp;&nbsp;<strong>1.21</strong>&nbsp;&nbsp;</th>
+    </tr>
+    <tr>
+        <th>&nbsp;</th>
+    </tr>
+    <tr>
+        <td><a href="https://minecraftforge.net/" target="_blank"> <img src="https://avatars.githubusercontent.com/u/1390178?s=18&v=4" style="float:left; vertical-align:middle; margin-right: 5pt" />Forge</a></td>
+        <td>❌</td>
+        <td>⏳</td>
+        <td>⏳</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>⏳</td>
+    </tr>
+    <tr>
+        <td><a href="https://neoforged.net/" target="_blank"> <img src="https://avatars.githubusercontent.com/u/138629134?s=18&v=4" style="float:left; vertical-align:middle; margin-right: 5pt" />NeoForge</a></td>
+        <td>⛔</td>
+        <td>⛔</td>
+        <td>⛔</td>
+        <td>⛔</td>
+        <td>〰️</td>
+        <td>❌</td>
+        <td>⏳</td>
+    </tr>
+    <tr>
+        <td><a href="https://fabricmc.net/" target="_blank"> <img src="https://avatars.githubusercontent.com/u/21025855?s=18&v=4" style="float:left; vertical-align:middle; margin-right: 5pt" />Fabric</a></td>
+        <td>❌</td>
+        <td>⏳</td>
+        <td>⏳</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>⏳</td>
+  </tr>
+</table> 
+<br/>
+<table style="border-collapse: collapse; margin-left: auto; margin-right: auto;">
+    <tr>
+        <td>✅</td>
+        <td>: Supported</td>
+    </tr>
+    <tr>
+        <td>❌</td>
+        <td>: Not Supported but could be if there is enough demand</td>
+    </tr>
+    <tr>
+        <td>⛔</td>
+        <td>: Not Applicable/Possible (e.g. no modloader support)</td>
+    </tr>
+    <tr>
+        <td>⏳</td>
+        <td>: Planned or In-Progress</td>
+    </tr>
+    <tr>
+        <td>〰️</td>
+        <td>: Use Forge version</td>
+    </tr>
+</table>
+</p>
+<br/>
+<br/>
+<br/>
+<h2>📜 Changelogs (Update history)</h2></br>
+<br/>
+<div class="spoiler"><p>
+<h5>1.0.0</h5>
+ - Initial release<br/>
+</p></div><br/>
+<br/>
+<br/>
+<br/>
+<h2>⭐ Highlights</h2><br/><br/>
+ - Works with TFC (TerraFirmaCraft) and probably all other mods (please report if not);<br/>
+ - Multiply the day and night length separately;<br/>
+ - Required on both Server and Client side (to prevent judder/desync);<br/>
+ - Can use arbitrary fractions, e.g. 1.5 or 50.25;<br/>
+ - [Forge] Per-world config<br/>
+<br/>
+<br/>
+<br/>
+<h2>🏷️ All Features & Config</h2><br/>
+<p>The mod aims to be as configurable as possible, so here's a run-down of all features sorted by config location and order.</p><br/>
+<h3><em><strong>simpledaylengthextender-server.toml:</strong></em></h3>
+<p><em>Note: If running Forge, this config generates under "serverconfig" in your world/save folder </em></p>
+<div class="spoiler"><p>
+<h4>[general]</h4>
+<h5>dayLengthMultiplier:</h5>
+ - Multiply the day length by this number. Fractions are supported.<br/>
+ - Default is 1.0, range is 1.0 to 100.0<br/>
+<h5>nightLengthMultiplier:</h5>
+ - Multiply the night length by this number. Fractions supported.<br/>
+ - Default is 1.0, range is 1.0 to 100.0<br/>
+<h5>dayStartInTicks:</h5>
+ - Start time in ticks to use the day multiplier. Must be less than nightStartInTicks.<br/>
+ - Default of 0 represents a standard Minecraft day start of 06:00.<br/>
+<h5>nightStartInTicks:</h5>
+ - Start time in ticks to use the night multiplier.<br/>
+ - Default of 13000 represents a standard Minecraft night start of 19:00.<br/>
+<br/>
+</p></div>
+<br/>
+<br/>
+<br/>
+<h2>✔️ Compatibility and Known Issues</h2><br/>
+<br/>
+<br/>
+<br/>
+Please report any and all issues not mentioned so I can improve the mod :D</p>
+<br/>
+<br/>
+<br/>
+<h2>🛎️ Support</h2><br/>
+<br/>
+<p>Hopefully, the mod is simple enough to use, but you are more than welcome to:</p>
+<ul>
+<li>Report any bugs you find;</li>
+<li>Report any incompatibilities with other mods (e.g. custom beds);</li>
+<li>Request any features you want to see</li>
+</ul><br/>
+<p>...and ask pretty much any question related to the mod, I'll reply when I can 😊</p>
+<br/>
+<br/>
+<br/>
+<h2>⁉️ FAQ / Troubleshooting</h2></br>
+<br/>
+<p><strong>Q. <em>Can I use this in my modpack?</em></strong></p>
+<p>A. Of course! As long as you consider reporting any mod compatibility issues, and feature/config requests too 😁</p>
+<br/>
+<p><strong>Q. <em>I have another question...</em></strong></p>
+<p>A. ...ask away in the comments :)</em></p>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
