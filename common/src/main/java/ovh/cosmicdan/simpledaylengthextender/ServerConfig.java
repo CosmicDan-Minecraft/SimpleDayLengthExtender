@@ -6,9 +6,9 @@ public class ServerConfig {
     private static final String sectionGeneral = "general";
 
     public final ForgeConfigSpec.BooleanValue delayTimeCycleUntilFirstJoin;
-    private static final String delayTimeCycleUntilFirstJoinTxt = "If true (default), the daylight cycle will not start until the first player joins the world. Recommended for multiplayer QoL and to prevent TFC log-spam on early-world load.";
+    private static final String delayTimeCycleUntilFirstJoinTxt = "If true (default), the daylight cycle will not start until the first player joins the world. Handy for multiplayer and/or heavy modpacks.";
     public final ForgeConfigSpec.BooleanValue disableTimeCycleWhenServerEmpty;
-    private static final String disableTimeCycleWhenServerEmptyTxt = "If true (default), doDaylightCycle will be forced to false when the server/world is empty. Note that if TFC is installed, and its equivalent setting is enabled, you should enable this too to prevent log spam.";
+    private static final String disableTimeCycleWhenServerEmptyTxt = "If true (NOT default), doDaylightCycle will be forced to false when the server/world is empty. Might be useful for multiplayer.";
     // TODO: Make these per-level (dimension)...? Use some kind of list for phases rather than fixed day/night...?
     public final ForgeConfigSpec.IntValue dayStartInTicks;
     private static final String dayStartInTicksTxt = "Start time in ticks to use the day multiplier. 0 represents a standard Minecraft day start of 06:00. Must be less than nightStartInTicks.";
