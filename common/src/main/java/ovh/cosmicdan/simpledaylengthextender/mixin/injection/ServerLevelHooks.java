@@ -14,6 +14,8 @@ import ovh.cosmicdan.simpledaylengthextender.ModPlatformHelper;
 import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
+import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
+
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelHooks {
     @Unique
@@ -76,15 +78,13 @@ public abstract class ServerLevelHooks {
         }
 
         // manage TFC calendar-affected lengths
-        if (getLevel().getGameTime() % 100 == 0){
-            if (ModPlatformHelper.isTfcOverrideConfigured()){
-                if (ModPlatformHelper.getTfcCalendarDay(getLevel()) > simpleDayLengthExtender_previousCalendarDay)
-                {
-                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(getLevel());
-                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, getLevel(), dayRatio);
-                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, getLevel(), dayRatio);
-                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(getLevel());
-                }
+        if (ModPlatformHelper.isTfcOverrideConfigured() && getLevel().getGameTime() % TFC_CHECK_INTERVAL == 0){
+            if (ModPlatformHelper.getTfcCalendarDay(getLevel()) > simpleDayLengthExtender_previousCalendarDay)
+            {
+                float dayRatio = ModPlatformHelper.getTfcManagedRatio(getLevel());
+                simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, getLevel(), dayRatio);
+                simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, getLevel(), dayRatio);
+                simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(getLevel());
             }
         }
 

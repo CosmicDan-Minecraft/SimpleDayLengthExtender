@@ -42,7 +42,7 @@ public class ModPlatformHelperImpl
         return tfcContainerMaybe.isPresent() && serverConfig.tfcCalendarAutomaticallyAffectsLength.get();
     }
 
-    public static float getTfcManagedRatio(Level level, long calendarDay)
+    public static float getTfcManagedRatio(Level level)
     {
         if(isTfcOverrideConfigured()){
             return TfcHelper.affectTimeWithCalendar(level);
