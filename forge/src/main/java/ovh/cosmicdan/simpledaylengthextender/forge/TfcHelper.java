@@ -47,7 +47,7 @@ public class TfcHelper
             level.getLevelData(),
             "Night time",
             serverConfig.nightLengthMultiplier.get()*((2-dayRatio)/1.5f), // adjust so that the base (1.0) multiplier totals to 2 across day and night
-            serverConfig.dayStartInTicks.get()
+            serverConfig.nightStartInTicks.get()
         );
     }
 
