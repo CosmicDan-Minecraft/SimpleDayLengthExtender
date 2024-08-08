@@ -18,6 +18,9 @@ public class ServerConfig {
     private static final String nightStartInTicksTxt = "Start time in ticks to use the night multiplier. 13000 represents a standard Minecraft night start of 19:00.";
     public final ForgeConfigSpec.DoubleValue nightLengthMultiplier;
     private static final String nightLengthMultiplierTxt = "Multiply the night length by this number. Fractions supported, but must be above 1.0 (cannot shorten).";
+    public final ForgeConfigSpec.BooleanValue tfcCalendarAutomaticallyAffectsLength;
+    private static final String tfcCalendarAutomaticallyAffectsLengthTxt = "Automatically uses the TFC Calendar to adjust day and night lengths.";
+
 
     public ServerConfig(final ForgeConfigSpec.Builder builder) {
         builder.push(sectionGeneral);
@@ -40,5 +43,8 @@ public class ServerConfig {
         nightLengthMultiplier = builder
                 .comment(nightLengthMultiplierTxt)
                 .defineInRange("nightLengthMultiplier", 1.0D, 1.0D, 100.0D);
+        tfcCalendarAutomaticallyAffectsLength = builder
+            .comment(tfcCalendarAutomaticallyAffectsLengthTxt)
+            .define("tfcCalendarAutomatic", false);
     }
 }

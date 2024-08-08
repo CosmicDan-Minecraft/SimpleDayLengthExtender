@@ -13,6 +13,8 @@ public final class SimpleDayLengthExtender {
 
     public static ServerConfig serverConfig = null;
 
+    public static final int TFC_CHECK_INTERVAL = 1000;
+
     //private static boolean firstTick = true;
     //public static TimeTocker dayTocker = null;
     //public static TimeTocker nightTocker = null;
