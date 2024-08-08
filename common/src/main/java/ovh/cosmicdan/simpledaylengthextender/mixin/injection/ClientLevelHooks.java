@@ -4,11 +4,13 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import ovh.cosmicdan.simpledaylengthextender.ModPlatformHelper;
 import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
@@ -20,6 +22,9 @@ public abstract class ClientLevelHooks {
     private TimeTocker simpleDayLengthExtender_dayTocker = null;
     @Unique
     private TimeTocker simpleDayLengthExtender_nightTocker = null;
+
+    @Unique
+    private long simpleDayLengthExtender_previousCalendarDay = 0;
 
     @Shadow
     public abstract LevelData getLevelData();
@@ -39,6 +44,22 @@ public abstract class ClientLevelHooks {
             simpleDayLengthExtender_isFirstLevelTick = false;
             simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevelData());
             simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevelData());
+        }
+
+        // manage TFC calendar-affected lengths
+        if (((Level)((Object)this)).getGameTime() % 100 == 0){
+            if (ModPlatformHelper.isTfcOverrideConfigured()){
+
+                Level level = ((Level)((Object)this));
+
+                if (ModPlatformHelper.getTfcCalendarDay(level) > simpleDayLengthExtender_previousCalendarDay)
+                {
+                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(level);
+                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, level, dayRatio);
+                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, level, dayRatio);
+                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(level);
+                }
+            }
         }
 
         final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);

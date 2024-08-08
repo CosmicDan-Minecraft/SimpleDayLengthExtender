@@ -49,8 +49,8 @@ dependencies {
     // TerraFirmaCraft 3.2.5
     //modCompileOnly("curse.maven:terrafirmacraft-302973:5478226")
     // - Runtime-enabled alternative for testing
-    modImplementation("curse.maven:terrafirmacraft-302973:5478226")
-    modImplementation("vazkii.patchouli:Patchouli:1.20.1-84-FORGE")
+    //modImplementation("curse.maven:terrafirmacraft-302973:5478226")
+    //modImplementation("vazkii.patchouli:Patchouli:1.20.1-84-FORGE")
 }
 
 processResources {
