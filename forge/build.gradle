@@ -47,7 +47,7 @@ dependencies {
     implementation(include("io.github.llamalad7:mixinextras-forge:0.3.6"))
     
     // TerraFirmaCraft 3.2.5
-    //modCompileOnly("curse.maven:terrafirmacraft-302973:5478226")
+    modCompileOnly("curse.maven:terrafirmacraft-302973:5478226")
     // - Runtime-enabled alternative for testing
     //modImplementation("curse.maven:terrafirmacraft-302973:5478226")
     //modImplementation("vazkii.patchouli:Patchouli:1.20.1-84-FORGE")
