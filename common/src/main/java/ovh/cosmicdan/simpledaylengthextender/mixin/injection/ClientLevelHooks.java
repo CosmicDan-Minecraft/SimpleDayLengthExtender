@@ -43,23 +43,32 @@ public abstract class ClientLevelHooks {
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
         if (simpleDayLengthExtender_isFirstLevelTick) {
-            simpleDayLengthExtender_isFirstLevelTick = false;
-            simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevelData());
-            simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevelData());
-        }
-
-        // manage TFC calendar-affected lengths
-        if (ModPlatformHelper.isTfcOverrideConfigured() && ((Level)((Object)this)).getGameTime() % TFC_CHECK_INTERVAL == 0){
-            Level level = ((Level)((Object)this));
-
-            if (ModPlatformHelper.getTfcCalendarDay(level) > simpleDayLengthExtender_previousCalendarDay)
-            {
+            if (ModPlatformHelper.isTfcOverrideConfigured()){
+                Level level = ((Level)((Object)this));
                 float dayRatio = ModPlatformHelper.getTfcManagedRatio(level);
                 simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, level, dayRatio);
                 simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, level, dayRatio);
                 simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(level);
+            } else {
+                simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevelData());
+                simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevelData());
+            }
+            simpleDayLengthExtender_isFirstLevelTick = false;
+        } else {
+            // manage TFC calendar-affected lengths
+            if (ModPlatformHelper.isTfcOverrideConfigured() && ((Level)((Object)this)).getGameTime() % TFC_CHECK_INTERVAL == 0){
+                Level level = ((Level)((Object)this));
+
+                if (ModPlatformHelper.getTfcCalendarDay(level) > simpleDayLengthExtender_previousCalendarDay)
+                {
+                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(level);
+                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, level, dayRatio);
+                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, level, dayRatio);
+                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(level);
+                }
             }
         }
+
 
         final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
         if (doDaylightCycle)

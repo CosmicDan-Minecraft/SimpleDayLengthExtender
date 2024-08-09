@@ -65,4 +65,12 @@ public class ModPlatformHelperImpl
         }
         return null;
     }
+
+    public static long getTfcTimeOfDay()
+    {
+        if(isTfcOverrideConfigured()){
+            return TfcHelper.getTfcTimeOfDay();
+        }
+        return 0L;
+    }
 }

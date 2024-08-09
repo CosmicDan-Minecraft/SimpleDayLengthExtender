@@ -41,5 +41,9 @@ public class ModPlatformHelperImpl {
         return null;
     }
 
+    public static long getTfcTimeOfDay()
+    {
+        return 0L;
+    }
 
 }

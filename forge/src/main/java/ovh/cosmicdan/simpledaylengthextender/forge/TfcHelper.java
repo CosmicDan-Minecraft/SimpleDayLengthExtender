@@ -36,21 +36,27 @@ public class TfcHelper
 
     public static TimeTocker buildTfcManagedTocker(Boolean day, Level level, float dayRatio){
         // this makes the total day length 1.5 times longer than vanilla to avoid going below 1.0 multiplier for day or night
+        int dayLengthInTicks = (int)(8000f*(dayRatio+1));
         if (day){
             return buildNewTocker(
                 level.getLevelData(),
                 "Day time",
-                serverConfig.dayLengthMultiplier.get()*((1+dayRatio)),
-                serverConfig.dayStartInTicks.get()
+                serverConfig.dayLengthMultiplier.get()*(dayRatio+1),
+                0
             );
         }
         return buildNewTocker(
             level.getLevelData(),
             "Night time",
-            serverConfig.nightLengthMultiplier.get()*((2-dayRatio)),
-            serverConfig.nightStartInTicks.get()
+            serverConfig.nightLengthMultiplier.get()*(2-dayRatio),
+            serverConfig.nightStartInTicks.get() == 13000 ? 12000 : serverConfig.nightStartInTicks.get()
+            // adjust the night start so that night and day are both equal with equal multipliers, with default configs
         );
     }
 
+    public static long getTfcTimeOfDay()
+    {
+        return Calendars.SERVER.getCalendarDayTime();
+    }
 
 }

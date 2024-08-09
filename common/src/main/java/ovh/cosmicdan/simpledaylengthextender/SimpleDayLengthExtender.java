@@ -53,12 +53,16 @@ public final class SimpleDayLengthExtender {
 
     public static boolean shouldAllowDaylightProgression(LevelData levelData, TimeTocker dayTocker, TimeTocker nightTocker) {
         boolean shouldAdvanceTime = false;
-        final long timeOfDay = levelData.getDayTime();
+        long timeOfDay = levelData.getDayTime();
+        if(ModPlatformHelper.isTfcOverrideConfigured()){
+            timeOfDay = ModPlatformHelper.getTfcTimeOfDay();
+        }
         if (timeOfDay >= nightTocker.phaseStartInTicks) {
             shouldAdvanceTime = nightTocker.shouldAdvanceTime(levelData);
         } else {
             shouldAdvanceTime = dayTocker.shouldAdvanceTime(levelData);
         }
+
         return shouldAdvanceTime;
     }
 

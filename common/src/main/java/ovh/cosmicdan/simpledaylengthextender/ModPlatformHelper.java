@@ -40,4 +40,11 @@ public class ModPlatformHelper {
     {
         return null;
     }
+
+    @ExpectPlatform
+    @Nullable
+    public static long getTfcTimeOfDay()
+    {
+        return 0L;
+    }
 }
