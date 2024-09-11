@@ -1,5 +1,6 @@
-<h2>⏱️ About</h2><br/>
-<p>A simple yet compatible mod to extend the day and/or night length in Minecraft.
+<h2>⏱️ About</h2>
+<p>A simple yet highly-compatible mod to extend the day and/or night length in Minecraft. It works by internally switching doDaylightCycle on/off at a specific pattern calculated from the configured day/night length multiplier.</p>
+<p>Basically an automagic alternative to having command blocks slow down time progression. Because it works on the gamerule rather than hacking into tick times or day lengths, it shouldn't cause any issues with any other mods!</p>
 <br/>
 <br/>
 <br/>
@@ -21,12 +22,12 @@
     <tr>
         <td><a href="https://minecraftforge.net/" target="_blank"> <img src="https://avatars.githubusercontent.com/u/1390178?s=18&v=4" style="float:left; vertical-align:middle; margin-right: 5pt" />Forge</a></td>
         <td>❌</td>
-        <td>⏳</td>
+        <td>✅</td>
         <td>⏳</td>
         <td>❌</td>
         <td>✅</td>
         <td>❌</td>
-        <td>⏳</td>
+        <td>⛔</td>
     </tr>
     <tr>
         <td><a href="https://neoforged.net/" target="_blank"> <img src="https://avatars.githubusercontent.com/u/138629134?s=18&v=4" style="float:left; vertical-align:middle; margin-right: 5pt" />NeoForge</a></td>
@@ -41,7 +42,7 @@
     <tr>
         <td><a href="https://fabricmc.net/" target="_blank"> <img src="https://avatars.githubusercontent.com/u/21025855?s=18&v=4" style="float:left; vertical-align:middle; margin-right: 5pt" />Fabric</a></td>
         <td>❌</td>
-        <td>⏳</td>
+        <td>✅</td>
         <td>⏳</td>
         <td>❌</td>
         <td>✅</td>
@@ -76,14 +77,17 @@
 <br/>
 <br/>
 <br/>
-<h2>📜 Changelogs (Update history)</h2></br>
+<h2>📜 Changelogs (Update history)</h2>
 <br/>
 <div class="spoiler"><p>
+<h5>1.1.1</h5>
+ - Fix time extension for when day and night multipliers are different (oops). Thanks to Sub2I1 for reporting!<br/>
+<br/>
 <h5>1.1.0</h5>
  - Add "delayTimeCycleUntilFirstJoin" config option<br/>
  - Add "disableTimeCycleWhenServerEmpty" config option<br/>
  - Improve TFC compatibility (prevent log spam about Calendar stuff)<br/>
- - [Fabric] Add dependency on Forge Config API Port in metadata
+ - [Fabric] Add dependency on Forge Config API Port in metadata<br/>
 <br/>
 <h5>1.0.0</h5>
  - Initial release<br/>
@@ -91,7 +95,7 @@
 <br/>
 <br/>
 <br/>
-<h2>⭐ Highlights</h2><br/><br/>
+<h2>⭐ Highlights</h2>
  - Works with TFC (TerraFirmaCraft) and probably all other mods (please report if not);<br/>
  - Multiply the day and night length separately;<br/>
  - Required on both Server and Client side (to prevent judder/desync);<br/>
@@ -100,28 +104,34 @@
 <br/>
 <br/>
 <br/>
-<h2>🏷️ All Features & Config</h2><br/>
-<p>The mod aims to be as configurable as possible, so here's a run-down of all features sorted by config location and order.</p><br/>
+<h2>🏷️ Usage & Config</h2>
+<p>After installing the mod, simply start Minecraft and load into a world. The default settings will make no changes, but you should now have the config files generated and ready to configure. If you want to be sure your config is working, you will see something like this in the Minecraft log after spawning in the world:</p>
+<p><code>[SimpleDayLengthExtender/]: Using a multiplier of x3.5 for Day time
+[SimpleDayLengthExtender/]:     - Phase starts at 0 and will advance daylight cycle by 2 ticks over 7 game ticks on average.
+[SimpleDayLengthExtender/]: Using a multiplier of x1.5 for Night time
+[SimpleDayLengthExtender/]:     - Phase starts at 13000 and will advance daylight cycle by 2 ticks over 3 game ticks on average.</code></p>
+<p>Refer to the config details below on how to configure the mod.</p>
 <h3><em><strong>simpledaylengthextender-server.toml:</strong></em></h3>
-<p><em>Note: If running Forge, this config generates under "serverconfig" in your world/save folder </em></p>
+
+<p><em>Tip: Server config for Forge (and some versions of Fabric) will generate under "serverconfig" in your world/save folder AFTER loading into a world once. World config is saved/loaded when you load/quit a world.</em></p>
 <div class="spoiler"><p>
-<h4>[general]</h4>
-<h5>delayTimeCycleUntilFirstJoin:</h5>
+<strong>[general]</strong><br/>
+<br/><strong>delayTimeCycleUntilFirstJoin</strong><br/>
  - If true (default), the daylight cycle will not start until the first player joins the world.<br/>
  - Handy for multiplayer and/or heavy modpacks.<br/>
-<h5>disableTimeCycleWhenServerEmpty</h5>
+<br/><strong>disableTimeCycleWhenServerEmpty</strong><br/>
  - If true (NOT default), doDaylightCycle will be forced to false when the server/world is empty<br/>
  - Might be useful for multiplayer.<br/>
-<h5>dayStartInTicks:</h5>
+<br/><strong>dayStartInTicks:</strong><br/>
  - Start time in ticks to use the day multiplier. Must be less than nightStartInTicks.<br/>
  - Default of 0 represents a standard Minecraft day start of 06:00.<br/>
-<h5>dayLengthMultiplier:</h5>
+<br/><strong>dayLengthMultiplier:</strong><br/>
  - Multiply the day length by this number. Fractions are supported.<br/>
  - Default is 1.0, range is 1.0 to 100.0<br/>
-<h5>nightStartInTicks:</h5>
+<br/><strong>nightStartInTicks:</strong><br/>
  - Start time in ticks to use the night multiplier.<br/>
  - Default of 13000 represents a standard Minecraft night start of 19:00.<br/>
-<h5>nightLengthMultiplier:</h5>
+<br/><strong>nightLengthMultiplier:</strong><br/>
  - Multiply the night length by this number. Fractions supported.<br/>
  - Default is 1.0, range is 1.0 to 100.0<br/>
 <br/>
@@ -129,9 +139,7 @@
 <br/>
 <br/>
 <br/>
-<h2>✔️ Compatibility and Known Issues</h2><br/>
-<br/>
-<p>
+<h2>✔️ Compatibility and Known Issues</h2>
 <h4>TerraFirmaCraft</h4>
  - Works fine. The disableTimeCycleWhenServerEmpty setting will be auto-set to true if TFC's time stop setting is also true.<br/>
 <br/>
@@ -141,19 +149,19 @@ Please report any and all issues not mentioned so I can improve the mod :D</p>
 <br/>
 <br/>
 <br/>
-<h2>🛎️ Support</h2><br/>
+<h2>🛎️ Support</h2>
 <br/>
-<p>Hopefully, the mod is simple enough to use, but you are more than welcome to:</p>
+<p>Hopefully, the mod is simple enough to use, but you are encouraged to:</p>
 <ul>
 <li>Report any bugs you find;</li>
-<li>Report any incompatibilities with other mods (e.g. custom beds);</li>
+<li>Report any incompatibilities with other mods;</li>
 <li>Request any features you want to see</li>
-</ul><br/>
-<p>...and ask pretty much any question related to the mod, I'll reply when I can 😊</p>
+</ul>
+<p>...so I can keep improving the mod 😊 be sure to mention your loader (e.g. Forge, Fabric) and Minecraft version too!</p>
 <br/>
 <br/>
 <br/>
-<h2>⁉️ FAQ / Troubleshooting</h2></br>
+<h2>⁉️ FAQ / Troubleshooting</h2>
 <br/>
 <p><strong>Q. <em>Can I use this in my modpack?</em></strong></p>
 <p>A. Of course! As long as you consider reporting any mod compatibility issues, and feature/config requests too 😁</p>
