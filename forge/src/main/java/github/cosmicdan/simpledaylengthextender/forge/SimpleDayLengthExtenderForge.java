@@ -1,8 +1,8 @@
-package ovh.cosmicdan.simpledaylengthextender.forge;
+package github.cosmicdan.simpledaylengthextender.forge;
 
 import net.minecraftforge.fml.common.Mod;
 
-import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
+import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 
 @Mod(SimpleDayLengthExtender.MOD_ID)
 public final class SimpleDayLengthExtenderForge {

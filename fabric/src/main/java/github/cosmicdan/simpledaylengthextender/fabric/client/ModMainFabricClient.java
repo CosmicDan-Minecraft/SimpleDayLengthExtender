@@ -1,4 +1,4 @@
-package ovh.cosmicdan.simpledaylengthextender.fabric.client;
+package github.cosmicdan.simpledaylengthextender.fabric.client;
 
 import net.fabricmc.api.ClientModInitializer;
 

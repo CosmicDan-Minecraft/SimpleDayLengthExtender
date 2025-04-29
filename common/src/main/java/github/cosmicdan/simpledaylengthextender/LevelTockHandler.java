@@ -1,12 +1,12 @@
-package ovh.cosmicdan.simpledaylengthextender;
+package github.cosmicdan.simpledaylengthextender;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.MODPLATFORM;
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.TFC_CHECK_INTERVAL;
+import static github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.MODPLATFORM;
+import static github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.TFC_CHECK_INTERVAL;
 
 public class LevelTockHandler {
     // TODO: Destroy self or whatever when server/world closes

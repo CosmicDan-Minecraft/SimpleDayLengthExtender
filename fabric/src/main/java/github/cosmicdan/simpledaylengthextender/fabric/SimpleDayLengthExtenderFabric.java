@@ -1,8 +1,8 @@
-package ovh.cosmicdan.simpledaylengthextender.fabric;
+package github.cosmicdan.simpledaylengthextender.fabric;
 
 import net.fabricmc.api.ModInitializer;
 
-import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
+import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 
 public final class SimpleDayLengthExtenderFabric implements ModInitializer {
     @Override

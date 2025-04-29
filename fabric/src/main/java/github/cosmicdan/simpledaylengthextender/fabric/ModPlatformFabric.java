@@ -1,15 +1,13 @@
-package ovh.cosmicdan.simpledaylengthextender.fabric;
+package github.cosmicdan.simpledaylengthextender.fabric;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import github.cosmicdan.simpledaylengthextender.IModPlatform;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import org.jetbrains.annotations.Nullable;
-import ovh.cosmicdan.simpledaylengthextender.IModPlatform;
-import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
-import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
+import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
+import github.cosmicdan.simpledaylengthextender.TimeTocker;
 
 public class ModPlatformFabric implements IModPlatform {
     @Override

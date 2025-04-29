@@ -1,17 +1,17 @@
-package ovh.cosmicdan.simpledaylengthextender.forge;
+package github.cosmicdan.simpledaylengthextender.forge;
 
+import github.cosmicdan.simpledaylengthextender.IModPlatform;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
-import ovh.cosmicdan.simpledaylengthextender.IModPlatform;
-import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
+import github.cosmicdan.simpledaylengthextender.TimeTocker;
 
 import java.util.Optional;
 
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.CONFIG;
+import static github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.CONFIG;
 
 public class ModPlatformForge implements IModPlatform {
     private boolean tfcCheckPending = true;

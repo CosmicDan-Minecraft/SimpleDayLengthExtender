@@ -1,7 +1,5 @@
-package ovh.cosmicdan.simpledaylengthextender;
+package github.cosmicdan.simpledaylengthextender;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;

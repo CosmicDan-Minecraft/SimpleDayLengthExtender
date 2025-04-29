@@ -13,7 +13,7 @@ A simple yet compatible mod to extend the day and/or night length in Minecraft. 
 
 https://www.curseforge.com/minecraft/mc-mods/simple-day-length-extender
 '''
-#logoFile = ""
+logoFile = "logo.png"
 
 [[dependencies.simpledaylengthextender]]
 modId = "forge"

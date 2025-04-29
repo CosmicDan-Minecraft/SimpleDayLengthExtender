@@ -1,13 +1,12 @@
-package ovh.cosmicdan.simpledaylengthextender.forge;
+package github.cosmicdan.simpledaylengthextender.forge;
 
+import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
+import github.cosmicdan.simpledaylengthextender.TimeTocker;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
 import net.dries007.tfc.config.TFCConfig;
 import net.dries007.tfc.util.calendar.Calendars;
-
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
 
 public class TfcHelper {
     public static boolean isTimeStopEnabled() {
@@ -20,7 +19,7 @@ public class TfcHelper {
         float fractionOfYear = Calendars.get(level).getCalendarFractionOfYear();
         // simple sinusoidal model
         dayLengthRatio = Mth.sin((float) ((fractionOfYear+0.75f)*Math.PI*2f))/2f + 0.5f;
-        LOGGER.info("Calculated day ratio of " + dayLengthRatio + " based on the current TFC Calendar date.");
+        SimpleDayLengthExtender.LOGGER.info("Calculated day ratio of " + dayLengthRatio + " based on the current TFC Calendar date.");
         return dayLengthRatio;
     }
 
@@ -32,19 +31,19 @@ public class TfcHelper {
         // this makes the total day length 1.5 times longer than vanilla to avoid going below 1.0 multiplier for day or night
         final TimeTocker tocker;
         if (day) {
-            tocker = buildNewTocker(
+            tocker = SimpleDayLengthExtender.buildNewTocker(
                 level.getLevelData(),
                 "Day time",
-                CONFIG.dayLengthMultiplier.get() * (dayRatio+1),
+                SimpleDayLengthExtender.CONFIG.dayLengthMultiplier.get() * (dayRatio+1),
                 0
             );
         } else {
-            tocker = buildNewTocker(
+            tocker = SimpleDayLengthExtender.buildNewTocker(
                 level.getLevelData(),
                 "Night time",
-                CONFIG.nightLengthMultiplier.get() * (2-dayRatio),
+                SimpleDayLengthExtender.CONFIG.nightLengthMultiplier.get() * (2-dayRatio),
                 // adjust the night start so that night and day are both equal with equal multipliers, with default configs
-                CONFIG.nightStartInTicks.get() == 13000 ? 12000 : CONFIG.nightStartInTicks.get()
+                SimpleDayLengthExtender.CONFIG.nightStartInTicks.get() == 13000 ? 12000 : SimpleDayLengthExtender.CONFIG.nightStartInTicks.get()
             );
         }
         return tocker;

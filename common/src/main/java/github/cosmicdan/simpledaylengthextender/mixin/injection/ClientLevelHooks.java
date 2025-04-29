@@ -1,14 +1,14 @@
-package ovh.cosmicdan.simpledaylengthextender.mixin.injection;
+package github.cosmicdan.simpledaylengthextender.mixin.injection;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import github.cosmicdan.simpledaylengthextender.LevelTockHandler;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import ovh.cosmicdan.simpledaylengthextender.LevelTockHandler;
 
 @Mixin(ClientLevel.class)
 public abstract class ClientLevelHooks {

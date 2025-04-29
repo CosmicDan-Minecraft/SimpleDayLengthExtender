@@ -12,14 +12,14 @@
     "sources": "https://github.com/CosmicDan-Minecraft/SimpleDayLengthExtender"
   },
   "license": "CC0-1.0",
-  "icon": "assets/simpledaylengthextender/icon.png",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ovh.cosmicdan.simpledaylengthextender.fabric.SimpleDayLengthExtenderFabric"
+      "github.cosmicdan.simpledaylengthextender.fabric.SimpleDayLengthExtenderFabric"
     ],
     "client": [
-      "ovh.cosmicdan.simpledaylengthextender.fabric.client.ModMainFabricClient"
+      "github.cosmicdan.simpledaylengthextender.fabric.client.ModMainFabricClient"
     ]
   },
   "mixins": [

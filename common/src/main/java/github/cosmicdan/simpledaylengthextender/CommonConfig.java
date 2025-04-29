@@ -1,4 +1,4 @@
-package ovh.cosmicdan.simpledaylengthextender;
+package github.cosmicdan.simpledaylengthextender;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

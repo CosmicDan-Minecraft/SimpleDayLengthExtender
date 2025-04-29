@@ -1,4 +1,4 @@
-package ovh.cosmicdan.simpledaylengthextender;
+package github.cosmicdan.simpledaylengthextender;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.Level;

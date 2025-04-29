@@ -1,29 +1,17 @@
-package ovh.cosmicdan.simpledaylengthextender.mixin.injection;
+package github.cosmicdan.simpledaylengthextender.mixin.injection;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceKey;
+import github.cosmicdan.simpledaylengthextender.LevelTockHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.storage.WritableLevelData;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import ovh.cosmicdan.simpledaylengthextender.LevelTockHandler;
-import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
-import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
-
-import java.util.function.Supplier;
-
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelHooks {
