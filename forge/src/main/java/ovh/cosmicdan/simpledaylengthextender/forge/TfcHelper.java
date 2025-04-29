@@ -11,6 +11,7 @@ import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
 
 public class TfcHelper {
     public static boolean isTimeStopEnabled() {
+        // SERVER ONLY
         return TFCConfig.SERVER.enableTimeStopWhenServerEmpty.get();
     }
 
@@ -34,24 +35,23 @@ public class TfcHelper {
             tocker = buildNewTocker(
                 level.getLevelData(),
                 "Day time",
-                serverConfig.dayLengthMultiplier.get() * (dayRatio+1),
+                CONFIG.dayLengthMultiplier.get() * (dayRatio+1),
                 0
             );
         } else {
             tocker = buildNewTocker(
                 level.getLevelData(),
                 "Night time",
-                serverConfig.nightLengthMultiplier.get() * (2-dayRatio),
+                CONFIG.nightLengthMultiplier.get() * (2-dayRatio),
                 // adjust the night start so that night and day are both equal with equal multipliers, with default configs
-                serverConfig.nightStartInTicks.get() == 13000 ? 12000 : serverConfig.nightStartInTicks.get()
+                CONFIG.nightStartInTicks.get() == 13000 ? 12000 : CONFIG.nightStartInTicks.get()
             );
         }
         return tocker;
     }
 
-    public static long getTfcTimeOfDay() {
-        // TODO: pass-in level and use #get for sided calendar
-        return Calendars.SERVER.getCalendarDayTime();
+    public static long getTfcTimeOfDay(Level level) {
+        return Calendars.get(level).getCalendarDayTime();
     }
 
 }

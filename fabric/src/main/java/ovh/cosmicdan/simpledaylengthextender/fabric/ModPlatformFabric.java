@@ -1,6 +1,8 @@
 package ovh.cosmicdan.simpledaylengthextender.fabric;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
@@ -17,6 +19,7 @@ public class ModPlatformFabric implements IModPlatform {
 
     @Override
     public boolean isTfcTimeStopEnabled() {
+        // SERVER ONLY
         return false;
     }
 
@@ -42,7 +45,7 @@ public class ModPlatformFabric implements IModPlatform {
     }
 
     @Override
-    public long getTfcTimeOfDay() {
+    public long getTfcTimeOfDay(Level level) {
         return 0L;
     }
 }

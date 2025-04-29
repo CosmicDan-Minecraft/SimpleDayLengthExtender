@@ -11,7 +11,7 @@ import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
 import java.util.Optional;
 
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.serverConfig;
+import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.CONFIG;
 
 public class ModPlatformForge implements IModPlatform {
     private boolean tfcCheckPending = true;
@@ -24,6 +24,7 @@ public class ModPlatformForge implements IModPlatform {
 
     @Override
     public boolean isTfcTimeStopEnabled() {
+        // SERVER ONLY
         if (tfcCheckPending) {
             tfcCheckPending = false;
             Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
@@ -37,7 +38,7 @@ public class ModPlatformForge implements IModPlatform {
     @Override
     public boolean isTfcOverrideConfigured() {
         Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
-        return tfcContainerMaybe.isPresent() && serverConfig.tfcCalendarAutomaticallyAffectsLength.get();
+        return tfcContainerMaybe.isPresent() && CONFIG.tfcCalendarAutomaticallyAffectsLength.get();
     }
 
     @Override
@@ -65,9 +66,9 @@ public class ModPlatformForge implements IModPlatform {
     }
 
     @Override
-    public long getTfcTimeOfDay() {
+    public long getTfcTimeOfDay(Level level) {
         if (isTfcOverrideConfigured())
-            return TfcHelper.getTfcTimeOfDay();
+            return TfcHelper.getTfcTimeOfDay(level);
         else
             return 0L;
     }

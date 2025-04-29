@@ -1,5 +1,6 @@
 package ovh.cosmicdan.simpledaylengthextender;
 
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 
 public class TimeTocker {
@@ -33,7 +34,7 @@ public class TimeTocker {
         tockerMax = (long)(intVal * numerator) + denominator;
     }
 
-    public boolean shouldAdvanceTime(LevelData levelData) {
+    public boolean shouldAdvanceTime(Level level) {
         boolean shouldAdvance = false;
         if (tocker >= tockerMax) {
             shouldAdvance = true;

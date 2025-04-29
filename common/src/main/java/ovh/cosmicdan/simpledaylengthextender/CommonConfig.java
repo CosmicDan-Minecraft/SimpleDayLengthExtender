@@ -2,7 +2,7 @@ package ovh.cosmicdan.simpledaylengthextender;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class ServerConfig {
+public class CommonConfig {
     private static final String sectionGeneral = "general";
 
     public final ForgeConfigSpec.BooleanValue delayTimeCycleUntilFirstJoin;
@@ -21,7 +21,7 @@ public class ServerConfig {
     private static final String tfcCalendarAutomaticallyAffectsLengthTxt = "If true, the TFC Calendar will further adjust day and night length depending on season. No effect if TFC is not installed.";
 
 
-    public ServerConfig(final ForgeConfigSpec.Builder builder) {
+    public CommonConfig(final ForgeConfigSpec.Builder builder) {
         builder.push(sectionGeneral);
 
         delayTimeCycleUntilFirstJoin = builder
