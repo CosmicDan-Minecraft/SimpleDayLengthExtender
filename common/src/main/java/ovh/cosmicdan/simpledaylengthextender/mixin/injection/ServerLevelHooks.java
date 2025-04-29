@@ -85,9 +85,8 @@ public abstract class ServerLevelHooks {
 
         } else {
             // manage TFC calendar-affected lengths
-            if (ModPlatformHelper.isTfcOverrideConfigured() && getLevel().getGameTime() % TFC_CHECK_INTERVAL == 0){
-                if (ModPlatformHelper.getTfcCalendarDay(getLevel()) > simpleDayLengthExtender_previousCalendarDay)
-                {
+            if (ModPlatformHelper.isTfcOverrideConfigured() && getLevel().getGameTime() % TFC_CHECK_INTERVAL == 0) {
+                if (ModPlatformHelper.getTfcCalendarDay(getLevel()) > simpleDayLengthExtender_previousCalendarDay) {
                     float dayRatio = ModPlatformHelper.getTfcManagedRatio(getLevel());
                     simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, getLevel(), dayRatio);
                     simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, getLevel(), dayRatio);

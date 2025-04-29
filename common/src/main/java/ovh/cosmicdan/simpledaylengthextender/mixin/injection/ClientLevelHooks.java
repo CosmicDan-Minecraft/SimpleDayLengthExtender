@@ -3,9 +3,15 @@ package ovh.cosmicdan.simpledaylengthextender.mixin.injection;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelData;
+import net.minecraft.world.level.storage.WritableLevelData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -14,10 +20,12 @@ import ovh.cosmicdan.simpledaylengthextender.ModPlatformHelper;
 import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
+import java.util.function.Supplier;
+
 import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
 
 @Mixin(ClientLevel.class)
-public abstract class ClientLevelHooks {
+public abstract class ClientLevelHooks extends Level {
     @Unique
     private boolean simpleDayLengthExtender_isFirstLevelTick = true;
     @Unique
@@ -27,6 +35,10 @@ public abstract class ClientLevelHooks {
 
     @Unique
     private long simpleDayLengthExtender_previousCalendarDay = 0;
+
+    protected ClientLevelHooks(WritableLevelData writableLevelData, ResourceKey<Level> resourceKey, RegistryAccess registryAccess, Holder<DimensionType> holder, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l, int i) {
+        super(writableLevelData, resourceKey, registryAccess, holder, supplier, bl, bl2, l, i);
+    }
 
     @Shadow
     public abstract LevelData getLevelData();
@@ -43,12 +55,11 @@ public abstract class ClientLevelHooks {
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
         if (simpleDayLengthExtender_isFirstLevelTick) {
-            if (ModPlatformHelper.isTfcOverrideConfigured()){
-                Level level = ((Level)((Object)this));
-                float dayRatio = ModPlatformHelper.getTfcManagedRatio(level);
-                simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, level, dayRatio);
-                simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, level, dayRatio);
-                simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(level);
+            if (ModPlatformHelper.isTfcOverrideConfigured()) {
+                float dayRatio = ModPlatformHelper.getTfcManagedRatio(this);
+                simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, this, dayRatio);
+                simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, this, dayRatio);
+                simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(this);
             } else {
                 simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevelData());
                 simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevelData());
@@ -56,19 +67,15 @@ public abstract class ClientLevelHooks {
             simpleDayLengthExtender_isFirstLevelTick = false;
         } else {
             // manage TFC calendar-affected lengths
-            if (ModPlatformHelper.isTfcOverrideConfigured() && ((Level)((Object)this)).getGameTime() % TFC_CHECK_INTERVAL == 0){
-                Level level = ((Level)((Object)this));
-
-                if (ModPlatformHelper.getTfcCalendarDay(level) > simpleDayLengthExtender_previousCalendarDay)
-                {
-                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(level);
-                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, level, dayRatio);
-                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, level, dayRatio);
-                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(level);
+            if (ModPlatformHelper.isTfcOverrideConfigured() && this.getGameTime() % TFC_CHECK_INTERVAL == 0 ) {
+                if (ModPlatformHelper.getTfcCalendarDay(this) > simpleDayLengthExtender_previousCalendarDay) {
+                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(this);
+                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, this, dayRatio);
+                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, this, dayRatio);
+                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(this);
                 }
             }
         }
-
 
         final boolean doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(getLevelData(), simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
         if (doDaylightCycle)
