@@ -1,6 +1,7 @@
 package ovh.cosmicdan.simpledaylengthextender;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
@@ -53,10 +54,12 @@ public final class SimpleDayLengthExtender {
 
     public static boolean shouldAllowDaylightProgression(LevelData levelData, TimeTocker dayTocker, TimeTocker nightTocker) {
         boolean shouldAdvanceTime = false;
+
         long timeOfDay = levelData.getDayTime();
         if(ModPlatformHelper.isTfcOverrideConfigured()){
             timeOfDay = ModPlatformHelper.getTfcTimeOfDay();
         }
+
         if (timeOfDay >= nightTocker.phaseStartInTicks) {
             shouldAdvanceTime = nightTocker.shouldAdvanceTime(levelData);
         } else {
