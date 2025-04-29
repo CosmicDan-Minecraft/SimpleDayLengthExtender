@@ -33,18 +33,18 @@ public class TfcHelper {
         final TimeTocker tocker;
         if (day) {
             tocker = SimpleDayLengthExtender.buildNewTocker(
-                level.getLevelData(),
-                "Day time",
-                SimpleDayLengthExtender.CONFIG.dayLengthMultiplier.get() * (dayRatio+1),
-                0
+                    level.getLevelData(),
+                    "Day time",
+                    SimpleDayLengthExtender.CONFIG.dayLengthMultiplier.get() * (dayRatio+1),
+                    0
             );
         } else {
             tocker = SimpleDayLengthExtender.buildNewTocker(
-                level.getLevelData(),
-                "Night time",
-                SimpleDayLengthExtender.CONFIG.nightLengthMultiplier.get() * (2-dayRatio),
-                // adjust the night start so that night and day are both equal with equal multipliers, with default configs
-                SimpleDayLengthExtender.CONFIG.nightStartInTicks.get() == 13000 ? 12000 : SimpleDayLengthExtender.CONFIG.nightStartInTicks.get()
+                    level.getLevelData(),
+                    "Night time",
+                    SimpleDayLengthExtender.CONFIG.nightLengthMultiplier.get() * (2-dayRatio),
+                    // adjust the night start so that night and day are both equal with equal multipliers, with default configs
+                    SimpleDayLengthExtender.CONFIG.nightStartInTicks.get() == 13000 ? 12000 : SimpleDayLengthExtender.CONFIG.nightStartInTicks.get()
             );
         }
         return tocker;

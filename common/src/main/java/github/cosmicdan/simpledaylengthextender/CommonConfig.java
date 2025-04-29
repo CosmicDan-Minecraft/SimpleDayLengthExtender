@@ -17,13 +17,15 @@ public class CommonConfig {
     private static final String nightStartInTicksTxt = " Start time in ticks to use the night multiplier. 13000 represents a standard Minecraft night start of 19:00.";
     public final ForgeConfigSpec.DoubleValue nightLengthMultiplier;
     private static final String nightLengthMultiplierTxt = " Multiply the night length by this number. Fractions supported, but must be above 1.0 (cannot shorten).";
-    public final ForgeConfigSpec.BooleanValue tfcCalendarAutomaticallyAffectsLength;
-    private static final String tfcCalendarAutomaticallyAffectsLengthTxt = " If true (default), the TFC Calendar will adjust day/night ratio depending on season. No effect if TFC is not installed.\n" +
-            " Note that day and night length will be forced to a minimum of x1.5 each in order to prevent either phase going below x1.0 which isn't possible.\n" +
-            " Note that if the night start time is configured to the default 13000 it will be adjusted to 12000 so that day and night share an equal length.\n";
+    public final ForgeConfigSpec.BooleanValue autoCalendarAdjustments;
+    private static final String autoCalendarAdjustmentsTxt = " If true (default), some mod-added calendars/seasons will dynamically adjust day/night ratio.\n" +
+            " Note that day/night length will effectively be 1.5x more than the multipliers dictate for math reasons. For example if the multipliers are set to 2.0x then \n" +
+            " the day length could be about x2.91 and night length about x1.59 depending on time of year. Keeping showDetailsToLog enabled will let you check final multipliers.\n" +
+            " Also note that if the night start time is configured with the default 13000 it will be corrected to 12000 so that the day and night length difference makes sense.\n" +
+            " Currently supported mods: TerraFirmaCraft, nothing else yet (please share your requests back to me - I will very likely add Serene Seasons support)";
     public final ForgeConfigSpec.BooleanValue showDetailsToLog;
     private static final String showDetailsToLogTxt = " If true (default), details of day/night length will be logged to console. Setting to false might be useful to reduce log spam, especially\n" +
-            " if TFC is installed and using calendar adjustments since it would make semi-regular log entries whenever calendar adjustments occur throughout the year.";
+            " if autoCalendarAdjustments are in effect since it would make semi-regular log entries whenever calendar adjustments occur throughout the year/seasons.";
 
 
     public CommonConfig(final ForgeConfigSpec.Builder builder) {
@@ -40,16 +42,16 @@ public class CommonConfig {
                 .defineInRange("dayStartInTicks", 0, 0, Integer.MAX_VALUE - 1001); // arbitrary max
         dayLengthMultiplier = builder
                 .comment(dayLengthMultiplierTxt)
-                .defineInRange("dayLengthMultiplier", 1.0D, 1.0D, 100.0D);
+                .defineInRange("dayLengthMultiplier", 2.0D, 1.0D, 100.0D);
         nightStartInTicks = builder
                 .comment(nightStartInTicksTxt)
                 .defineInRange("nightStartInTicks", 13000, 1, Integer.MAX_VALUE - 1000); // arbitrary max
         nightLengthMultiplier = builder
                 .comment(nightLengthMultiplierTxt)
-                .defineInRange("nightLengthMultiplier", 1.0D, 1.0D, 100.0D);
-        tfcCalendarAutomaticallyAffectsLength = builder
-                .comment(tfcCalendarAutomaticallyAffectsLengthTxt)
-                .define("tfcCalendarAutomatic", true);
+                .defineInRange("nightLengthMultiplier", 2.0D, 1.0D, 100.0D);
+        autoCalendarAdjustments = builder
+                .comment(autoCalendarAdjustmentsTxt)
+                .define("autoCalendarAdjustments", true);
         showDetailsToLog = builder
                 .comment(showDetailsToLogTxt)
                 .define("showDetailsToLog", true);

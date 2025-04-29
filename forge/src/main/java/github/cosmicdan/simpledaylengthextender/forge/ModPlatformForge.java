@@ -38,7 +38,7 @@ public class ModPlatformForge implements IModPlatform {
     @Override
     public boolean isTfcOverrideConfigured() {
         Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
-        return tfcContainerMaybe.isPresent() && CONFIG.tfcCalendarAutomaticallyAffectsLength.get();
+        return tfcContainerMaybe.isPresent() && CONFIG.autoCalendarAdjustments.get();
     }
 
     @Override
