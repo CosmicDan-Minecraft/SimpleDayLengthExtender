@@ -6,6 +6,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 public interface IModPlatform {
     void registerConfig(ModConfig.Type type, ForgeConfigSpec spec);
+    boolean isTfcInstalled();
     boolean isTfcTimeStopEnabled(); // SERVER ONLY
     boolean isTfcOverrideConfigured();
     float getTfcManagedRatio(Level level);

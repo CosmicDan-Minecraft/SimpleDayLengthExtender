@@ -71,7 +71,7 @@ public final class SimpleDayLengthExtender {
     }
 
     // SERVER ONLY
-    public static boolean shouldDisableCycleWhenEmtpy() {
+    public static boolean shouldDisableCycleWhenEmpty() {
         boolean shouldDisable = SimpleDayLengthExtender.CONFIG.disableTimeCycleWhenServerEmpty.get();
         if (MODPLATFORM.isTfcTimeStopEnabled()) {
             if (!shouldDisable) {

@@ -14,6 +14,8 @@ import java.util.Optional;
 import static github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.CONFIG;
 
 public class ModPlatformForge implements IModPlatform {
+    private boolean tfcInstalledCheckDone = false;
+    private boolean tfcInstalled = false;
     private boolean tfcCheckPending = true;
     private boolean tfcTimeStopEnabled = false;
 
@@ -23,22 +25,30 @@ public class ModPlatformForge implements IModPlatform {
     }
 
     @Override
+    public boolean isTfcInstalled() {
+        if (!tfcInstalledCheckDone) {
+            tfcInstalledCheckDone = true;
+            Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
+            if (tfcContainerMaybe.isPresent())
+                tfcInstalled = true;
+        }
+        return tfcInstalled;
+    }
+
+    @Override
     public boolean isTfcTimeStopEnabled() {
         // SERVER ONLY
         if (tfcCheckPending) {
             tfcCheckPending = false;
-            Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
-            if (tfcContainerMaybe.isPresent()) {
+            if (isTfcInstalled())
                 tfcTimeStopEnabled = TfcHelper.isTimeStopEnabled();
-            }
         }
         return tfcTimeStopEnabled;
     }
 
     @Override
     public boolean isTfcOverrideConfigured() {
-        Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
-        return tfcContainerMaybe.isPresent() && CONFIG.autoCalendarAdjustments.get();
+        return isTfcInstalled() && CONFIG.autoCalendarAdjustments.get();
     }
 
     @Override

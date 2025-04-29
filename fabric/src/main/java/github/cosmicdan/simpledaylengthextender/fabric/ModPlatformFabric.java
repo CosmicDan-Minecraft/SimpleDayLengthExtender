@@ -16,6 +16,11 @@ public class ModPlatformFabric implements IModPlatform {
     }
 
     @Override
+    public boolean isTfcInstalled() {
+        return false;
+    }
+
+    @Override
     public boolean isTfcTimeStopEnabled() {
         // SERVER ONLY
         return false;

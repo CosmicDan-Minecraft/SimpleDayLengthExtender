@@ -38,7 +38,7 @@ public class LevelTockHandler {
             simpleDayLengthExtender_isFirstLevelTick = false;
 
             if (server != null) {
-                simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.shouldDisableCycleWhenEmtpy();
+                simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.shouldDisableCycleWhenEmpty();
                 if (SimpleDayLengthExtender.CONFIG.delayTimeCycleUntilFirstJoin.get()) {
                     simpleDayLengthExtender_waitingForPlayer = true;
                     gameRules.getRule(gameruleKeyDoDaylight).set(false, server);
