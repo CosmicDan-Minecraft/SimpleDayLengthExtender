@@ -19,7 +19,8 @@ public class TfcHelper {
         float fractionOfYear = Calendars.get(level).getCalendarFractionOfYear();
         // simple sinusoidal model
         dayLengthRatio = Mth.sin((float) ((fractionOfYear+0.75f)*Math.PI*2f))/2f + 0.5f;
-        SimpleDayLengthExtender.LOGGER.info("Calculated day ratio of " + dayLengthRatio + " based on the current TFC Calendar date.");
+        if (SimpleDayLengthExtender.CONFIG.showDetailsToLog.get())
+            SimpleDayLengthExtender.LOGGER.info("Calculated day ratio of " + dayLengthRatio + " based on the current TFC Calendar date.");
         return dayLengthRatio;
     }
 

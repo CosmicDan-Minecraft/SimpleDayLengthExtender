@@ -26,9 +26,11 @@ public final class SimpleDayLengthExtender {
     }
 
     public static TimeTocker buildNewTocker(LevelData levelData, String phaseName, double phaseMultiplier, int phaseStartInTicks) {
-        LOGGER.info("Using a multiplier of x" + phaseMultiplier + " for " + phaseName);
         TimeTocker newTocker = new TimeTocker(phaseMultiplier, phaseStartInTicks);
-        LOGGER.info("    - Phase starts at " + newTocker.phaseStartInTicks + " and will advance daylight cycle by " + newTocker.tockerInc + " ticks over " + newTocker.tockerMax + " game ticks on average.");
+        if (SimpleDayLengthExtender.CONFIG.showDetailsToLog.get()) {
+            LOGGER.info("Using a multiplier of x" + phaseMultiplier + " for " + phaseName);
+            LOGGER.info("    - Phase starts at " + newTocker.phaseStartInTicks + " and will advance daylight cycle by " + newTocker.tockerInc + " ticks over " + newTocker.tockerMax + " game ticks on average.");
+        }
         return newTocker;
     }
 
