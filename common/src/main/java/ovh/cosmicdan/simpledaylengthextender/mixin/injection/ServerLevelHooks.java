@@ -10,8 +10,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import ovh.cosmicdan.simpledaylengthextender.ModPlatformHelper;
 import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
+
+import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelHooks {
@@ -27,6 +30,8 @@ public abstract class ServerLevelHooks {
     private boolean simpleDayLengthExtender_waitingForFirstPlayer = false;
     @Unique
     private int simpleDayLengthExtender_playersLastCount = 0;
+    @Unique
+    private long simpleDayLengthExtender_previousCalendarDay = 0;
 
     @Shadow
     public abstract ServerLevel getLevel();
@@ -60,16 +65,38 @@ public abstract class ServerLevelHooks {
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
         // setup initial config if required (first tick of a new level)
         if (simpleDayLengthExtender_isFirstLevelTick) {
-            simpleDayLengthExtender_isFirstLevelTick = false;
-            simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevel().getLevelData());
-            simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevel().getLevelData());
+            if (ModPlatformHelper.isTfcOverrideConfigured()){
+                float dayRatio = ModPlatformHelper.getTfcManagedRatio(getLevel());
+                simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, getLevel(), dayRatio);
+                simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, getLevel(), dayRatio);
+                simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(getLevel());
+            } else {
+                simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevel().getLevelData());
+                simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevel().getLevelData());
+            }
             simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.shouldDisableCycleWhenEmtpy();
+            simpleDayLengthExtender_isFirstLevelTick = false;
+
             if (SimpleDayLengthExtender.serverConfig.delayTimeCycleUntilFirstJoin.get()) {
                 simpleDayLengthExtender_waitingForFirstPlayer = true;
                 gameRules.getRule(gameruleKeyDoDaylight).set(false, getServer());
                 SimpleDayLengthExtender.LOGGER.info("World started, doDaylightCycle is delayed until first player join...");
             }
+
+        } else {
+            // manage TFC calendar-affected lengths
+            if (ModPlatformHelper.isTfcOverrideConfigured() && getLevel().getGameTime() % TFC_CHECK_INTERVAL == 0){
+                if (ModPlatformHelper.getTfcCalendarDay(getLevel()) > simpleDayLengthExtender_previousCalendarDay)
+                {
+                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(getLevel());
+                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, getLevel(), dayRatio);
+                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, getLevel(), dayRatio);
+                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(getLevel());
+                }
+            }
         }
+
+
 
         if (simpleDayLengthExtender_waitingForFirstPlayer) {
             if (getServer().getPlayerCount() != 0) {

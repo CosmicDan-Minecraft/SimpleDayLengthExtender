@@ -14,6 +14,8 @@ public final class SimpleDayLengthExtender {
 
     public static ServerConfig serverConfig = null;
 
+    public static final int TFC_CHECK_INTERVAL = 1000;
+
     //private static boolean firstTick = true;
     //public static TimeTocker dayTocker = null;
     //public static TimeTocker nightTocker = null;
@@ -52,12 +54,18 @@ public final class SimpleDayLengthExtender {
 
     public static boolean shouldAllowDaylightProgression(LevelData levelData, TimeTocker dayTocker, TimeTocker nightTocker) {
         boolean shouldAdvanceTime = false;
-        final long timeOfDay = levelData.getDayTime() % Level.TICKS_PER_DAY;
+
+        long timeOfDay = levelData.getDayTime();
+        if(ModPlatformHelper.isTfcOverrideConfigured()){
+            timeOfDay = ModPlatformHelper.getTfcTimeOfDay();
+        }
+
         if (timeOfDay >= nightTocker.phaseStartInTicks) {
             shouldAdvanceTime = nightTocker.shouldAdvanceTime(levelData);
         } else {
             shouldAdvanceTime = dayTocker.shouldAdvanceTime(levelData);
         }
+
         return shouldAdvanceTime;
     }
 
