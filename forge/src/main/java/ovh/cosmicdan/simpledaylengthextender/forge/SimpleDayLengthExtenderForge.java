@@ -9,6 +9,6 @@ public final class SimpleDayLengthExtenderForge {
 
     public SimpleDayLengthExtenderForge() {
         // Run our common setup.
-        SimpleDayLengthExtender.init();
+        SimpleDayLengthExtender.init(new ModPlatformForge());
     }
 }

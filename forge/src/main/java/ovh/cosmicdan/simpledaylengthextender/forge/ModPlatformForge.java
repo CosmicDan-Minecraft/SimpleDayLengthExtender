@@ -6,22 +6,24 @@ import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
+import ovh.cosmicdan.simpledaylengthextender.IModPlatform;
 import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
 import java.util.Optional;
 
-import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.*;
+import static ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender.serverConfig;
 
-public class ModPlatformHelperImpl
-{
-    private static boolean tfcCheckPending = true;
-    private static boolean tfcTimeStopEnabled = false;
+public class ModPlatformForge implements IModPlatform {
+    private boolean tfcCheckPending = true;
+    private boolean tfcTimeStopEnabled = false;
 
-    public static void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
+    @Override
+    public void registerConfig(ModConfig.Type type, ForgeConfigSpec spec) {
         ModLoadingContext.get().registerConfig(type, spec);
     }
 
-    public static boolean isTfcTimeStopEnabled() {
+    @Override
+    public boolean isTfcTimeStopEnabled() {
         if (tfcCheckPending) {
             tfcCheckPending = false;
             Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
@@ -32,33 +34,38 @@ public class ModPlatformHelperImpl
         return tfcTimeStopEnabled;
     }
 
-    public static boolean isTfcOverrideConfigured() {
+    @Override
+    public boolean isTfcOverrideConfigured() {
         Optional<? extends ModContainer> tfcContainerMaybe = ModList.get().getModContainerById("tfc");
         return tfcContainerMaybe.isPresent() && serverConfig.tfcCalendarAutomaticallyAffectsLength.get();
     }
 
-    public static float getTfcManagedRatio(Level level) {
+    @Override
+    public float getTfcManagedRatio(Level level) {
         if (isTfcOverrideConfigured())
             return TfcHelper.affectTimeWithCalendar(level);
         else
             return 0;
     }
 
-    public static long getTfcCalendarDay(Level level) {
+    @Override
+    public long getTfcCalendarDay(Level level) {
         if (isTfcOverrideConfigured())
             return TfcHelper.getCalendarDay(level);
         else
             return 0;
     }
 
-    public static TimeTocker buildTfcManagedTocker(Boolean day, Level level, float dayRatio) {
+    @Override
+    public TimeTocker buildTfcManagedTocker(Boolean day, Level level, float dayRatio) {
         if (isTfcOverrideConfigured())
             return TfcHelper.buildTfcManagedTocker(day, level, dayRatio);
         else
             return null;
     }
 
-    public static long getTfcTimeOfDay() {
+    @Override
+    public long getTfcTimeOfDay() {
         if (isTfcOverrideConfigured())
             return TfcHelper.getTfcTimeOfDay();
         else

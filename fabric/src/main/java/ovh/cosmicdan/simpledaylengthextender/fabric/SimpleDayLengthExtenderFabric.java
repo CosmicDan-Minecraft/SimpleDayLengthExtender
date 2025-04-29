@@ -12,6 +12,6 @@ public final class SimpleDayLengthExtenderFabric implements ModInitializer {
         // Proceed with mild caution.
 
         // Run our common setup.
-        SimpleDayLengthExtender.init();
+        SimpleDayLengthExtender.init(new ModPlatformFabric());
     }
 }

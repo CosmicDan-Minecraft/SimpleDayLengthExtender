@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import ovh.cosmicdan.simpledaylengthextender.ModPlatformHelper;
 import ovh.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import ovh.cosmicdan.simpledaylengthextender.TimeTocker;
 
@@ -55,11 +54,11 @@ public abstract class ClientLevelHooks extends Level {
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
         if (simpleDayLengthExtender_isFirstLevelTick) {
-            if (ModPlatformHelper.isTfcOverrideConfigured()) {
-                float dayRatio = ModPlatformHelper.getTfcManagedRatio(this);
-                simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, this, dayRatio);
-                simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, this, dayRatio);
-                simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(this);
+            if (MODPLATFORM.isTfcOverrideConfigured()) {
+                float dayRatio = MODPLATFORM.getTfcManagedRatio(this);
+                simpleDayLengthExtender_dayTocker = MODPLATFORM.buildTfcManagedTocker(true, this, dayRatio);
+                simpleDayLengthExtender_nightTocker = MODPLATFORM.buildTfcManagedTocker(false, this, dayRatio);
+                simpleDayLengthExtender_previousCalendarDay = MODPLATFORM.getTfcCalendarDay(this);
             } else {
                 simpleDayLengthExtender_dayTocker = SimpleDayLengthExtender.buildNewTockerDay(getLevelData());
                 simpleDayLengthExtender_nightTocker = SimpleDayLengthExtender.buildNewTockerNight(getLevelData());
@@ -67,12 +66,12 @@ public abstract class ClientLevelHooks extends Level {
             simpleDayLengthExtender_isFirstLevelTick = false;
         } else {
             // manage TFC calendar-affected lengths
-            if (ModPlatformHelper.isTfcOverrideConfigured() && this.getGameTime() % TFC_CHECK_INTERVAL == 0 ) {
-                if (ModPlatformHelper.getTfcCalendarDay(this) > simpleDayLengthExtender_previousCalendarDay) {
-                    float dayRatio = ModPlatformHelper.getTfcManagedRatio(this);
-                    simpleDayLengthExtender_dayTocker = ModPlatformHelper.buildTfcManagedTocker(true, this, dayRatio);
-                    simpleDayLengthExtender_nightTocker = ModPlatformHelper.buildTfcManagedTocker(false, this, dayRatio);
-                    simpleDayLengthExtender_previousCalendarDay = ModPlatformHelper.getTfcCalendarDay(this);
+            if (MODPLATFORM.isTfcOverrideConfigured() && this.getGameTime() % TFC_CHECK_INTERVAL == 0 ) {
+                if (MODPLATFORM.getTfcCalendarDay(this) > simpleDayLengthExtender_previousCalendarDay) {
+                    float dayRatio = MODPLATFORM.getTfcManagedRatio(this);
+                    simpleDayLengthExtender_dayTocker = MODPLATFORM.buildTfcManagedTocker(true, this, dayRatio);
+                    simpleDayLengthExtender_nightTocker = MODPLATFORM.buildTfcManagedTocker(false, this, dayRatio);
+                    simpleDayLengthExtender_previousCalendarDay = MODPLATFORM.getTfcCalendarDay(this);
                 }
             }
         }

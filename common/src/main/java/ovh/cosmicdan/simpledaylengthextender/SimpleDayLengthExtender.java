@@ -10,16 +10,18 @@ import org.slf4j.Logger;
 public final class SimpleDayLengthExtender {
     public static final String MOD_ID = "simpledaylengthextender";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static IModPlatform MODPLATFORM;
 
     public static ServerConfig serverConfig = null;
 
     public static final int TFC_CHECK_INTERVAL = 1024;
 
-    public static void init() {
+    public static void init(IModPlatform modPlatform) {
         // Register common config
         final Pair<ServerConfig, ForgeConfigSpec> specPairConfigCommon = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
         serverConfig = specPairConfigCommon.getLeft();
-        ModPlatformHelper.registerConfig(ModConfig.Type.SERVER, specPairConfigCommon.getRight());
+        MODPLATFORM = modPlatform;
+        MODPLATFORM.registerConfig(ModConfig.Type.SERVER, specPairConfigCommon.getRight());
     }
 
     public static TimeTocker buildNewTocker(LevelData levelData, String phaseName, double phaseMultiplier, int phaseStartInTicks) {
@@ -51,8 +53,8 @@ public final class SimpleDayLengthExtender {
         boolean shouldAdvanceTime = false;
 
         final long timeOfDay;
-        if (ModPlatformHelper.isTfcOverrideConfigured())
-            timeOfDay = ModPlatformHelper.getTfcTimeOfDay();
+        if (MODPLATFORM.isTfcOverrideConfigured())
+            timeOfDay = MODPLATFORM.getTfcTimeOfDay();
         else
             timeOfDay = levelData.getDayTime();
 
@@ -67,7 +69,7 @@ public final class SimpleDayLengthExtender {
 
     public static boolean shouldDisableCycleWhenEmtpy() {
         boolean shouldDisable = SimpleDayLengthExtender.serverConfig.disableTimeCycleWhenServerEmpty.get();
-        if (ModPlatformHelper.isTfcTimeStopEnabled()) {
+        if (MODPLATFORM.isTfcTimeStopEnabled()) {
             if (shouldDisable == false) {
                 LOGGER.warn("The config setting 'disableTimeCycleWhenServerEmpty' was overridden to true because " +
                         "TFC's 'enableTimeStopWhenServerEmpty' is also true. To disable this warning, set " +
