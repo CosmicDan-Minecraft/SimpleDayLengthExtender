@@ -25,10 +25,8 @@ public abstract class ClientLevelHooks {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z")
     )
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
-        if (sdle_$tockHandler == null) {
-            System.out.println("~ Created new TockHandler on client");
+        if (sdle_$tockHandler == null)
             sdle_$tockHandler = new LevelTockHandler((Level)((Object)this));
-        }
         sdle_$tockHandler.onTickTimeDayCycleRuleCheck(gameRules, gameruleKeyDoDaylight, null);
         // always call original, our LevelTockHandler updated gameruleKeyDoDaylight
         return original.call(gameRules, gameruleKeyDoDaylight);

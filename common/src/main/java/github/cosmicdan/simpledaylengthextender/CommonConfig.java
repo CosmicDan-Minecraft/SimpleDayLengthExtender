@@ -23,7 +23,7 @@ public class CommonConfig {
             " Note that if the night start time is configured to the default 13000 it will be adjusted to 12000 so that day and night share an equal length.\n";
     public final ForgeConfigSpec.BooleanValue showDetailsToLog;
     private static final String showDetailsToLogTxt = " If true (default), details of day/night length will be logged to console. Setting to false might be useful to reduce log spam, especially\n" +
-            " if TFC is installed and using calendar adjustments - it makes regular log entries whenever calendar adjustments occur throughout the year.";
+            " if TFC is installed and using calendar adjustments since it would make semi-regular log entries whenever calendar adjustments occur throughout the year.";
 
 
     public CommonConfig(final ForgeConfigSpec.Builder builder) {
@@ -52,6 +52,6 @@ public class CommonConfig {
                 .define("tfcCalendarAutomatic", true);
         showDetailsToLog = builder
                 .comment(showDetailsToLogTxt)
-                .define("showDetailsToLog", false);
+                .define("showDetailsToLog", true);
     }
 }

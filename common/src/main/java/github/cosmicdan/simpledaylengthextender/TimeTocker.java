@@ -47,8 +47,7 @@ public class TimeTocker {
     /**
      * Thanks to https://www.geeksforgeeks.org/convert-given-decimal-number-into-an-irreducible-fraction/
      */
-    private static long gcd(long a, long b)
-    {
+    private static long gcd(long a, long b) {
         if (a == 0)
             return b;
         else if (b == 0)
@@ -57,10 +56,6 @@ public class TimeTocker {
             return gcd(a, b % a);
         else
             return gcd(b, a % b);
-    }
-
-    public void tock() {
-
     }
 
 }
