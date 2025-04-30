@@ -1,11 +1,10 @@
 package github.cosmicdan.simpledaylengthextender;
 
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public interface IModPlatform {
-    void registerConfig(ModConfig.Type type, ForgeConfigSpec spec);
+    void registerConfigCommon(ModConfigSpec spec);
     boolean isTfcInstalled();
     boolean isTfcTimeStopEnabled(); // SERVER ONLY
     boolean isTfcOverrideConfigured();

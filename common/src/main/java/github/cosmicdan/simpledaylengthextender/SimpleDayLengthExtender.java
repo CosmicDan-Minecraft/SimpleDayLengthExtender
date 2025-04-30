@@ -3,8 +3,7 @@ package github.cosmicdan.simpledaylengthextender;
 import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 
@@ -19,10 +18,10 @@ public final class SimpleDayLengthExtender {
 
     public static void init(IModPlatform modPlatform) {
         // Register common config
-        final Pair<CommonConfig, ForgeConfigSpec> specPairConfigCommon = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
+        final Pair<CommonConfig, ModConfigSpec> specPairConfigCommon = new ModConfigSpec.Builder().configure(CommonConfig::new);
         CONFIG = specPairConfigCommon.getLeft();
         MODPLATFORM = modPlatform;
-        MODPLATFORM.registerConfig(ModConfig.Type.COMMON, specPairConfigCommon.getRight());
+        MODPLATFORM.registerConfigCommon(specPairConfigCommon.getRight());
     }
 
     public static TimeTocker buildNewTocker(LevelData levelData, String phaseName, double phaseMultiplier, int phaseStartInTicks) {

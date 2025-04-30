@@ -1,18 +1,15 @@
-package github.cosmicdan.simpledaylengthextender.fabric;
+package github.cosmicdan.simpledaylengthextender.neoforge;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import github.cosmicdan.simpledaylengthextender.IModPlatform;
-import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import net.minecraft.world.level.Level;
+import github.cosmicdan.simpledaylengthextender.TimeTocker;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import org.jetbrains.annotations.Nullable;
-import github.cosmicdan.simpledaylengthextender.TimeTocker;
 
-public class ModPlatformFabric implements IModPlatform {
+public class ModPlatformNeoForge implements IModPlatform {
     @Override
     public void registerConfigCommon(ModConfigSpec spec) {
-        NeoForgeConfigRegistry.INSTANCE.register(SimpleDayLengthExtender.MOD_ID, ModConfig.Type.COMMON, spec);
+        SimpleDayLengthExtenderNeoForge.CONTAINER.registerConfig(ModConfig.Type.COMMON, spec);
     }
 
     @Override
@@ -33,7 +30,7 @@ public class ModPlatformFabric implements IModPlatform {
 
     @Override
     public float getTfcManagedRatio(Level level) {
-        return -1;
+        return 0.0f;
     }
 
     @Override
@@ -42,7 +39,6 @@ public class ModPlatformFabric implements IModPlatform {
     }
 
     @Override
-    @Nullable
     public TimeTocker buildTfcManagedTocker(Boolean day, Level level, float dayRatio) {
         return null;
     }
