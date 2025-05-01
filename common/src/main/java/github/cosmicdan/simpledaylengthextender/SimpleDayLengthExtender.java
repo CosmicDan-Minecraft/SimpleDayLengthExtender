@@ -1,16 +1,16 @@
 package github.cosmicdan.simpledaylengthextender;
 
-import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class SimpleDayLengthExtender {
     public static final String MOD_ID = "simpledaylengthextender";
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
     public static IModPlatform MODPLATFORM;
 
     public static CommonConfig CONFIG = null;
