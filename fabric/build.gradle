@@ -40,7 +40,8 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
     // Forge Config API port
-    modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
+    modApi "net.minecraftforge:forgeconfigapiport-fabric:4.2.11"
+    implementation 'com.electronwill.night-config:core:3.6.3'
 }
 
 processResources {
