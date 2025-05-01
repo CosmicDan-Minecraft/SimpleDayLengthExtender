@@ -47,7 +47,8 @@ public abstract class ServerLevelHooks {
     public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
         if (sdle_$tockHandler == null)
             sdle_$tockHandler = new LevelTockHandler((Level)((Object)this));
-        sdle_$tockHandler.onTickTimeDayCycleRuleCheck(gameRules, gameruleKeyDoDaylight, getServer());
+        // return value is only useful for client
+        final boolean doDaylightCycle = sdle_$tockHandler.onTickTimeDayCycleRuleCheck(gameRules, gameruleKeyDoDaylight, getServer());
         // always call original, our LevelTockHandler updated gameruleKeyDoDaylight
         return original.call(gameRules, gameruleKeyDoDaylight);
     }

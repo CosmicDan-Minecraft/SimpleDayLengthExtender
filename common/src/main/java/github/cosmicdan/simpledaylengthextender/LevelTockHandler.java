@@ -26,7 +26,7 @@ public class LevelTockHandler {
         level = levelIn;
     }
 
-    public void onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, @Nullable MinecraftServer server) {
+    public boolean onTickTimeDayCycleRuleCheck(@Nullable GameRules gameRules, @Nullable GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, @Nullable MinecraftServer server) {
         // setup initial config if required (first tick of a new level)
         if (simpleDayLengthExtender_isFirstLevelTick) {
             if (MODPLATFORM.isTfcOverrideConfigured()) {
@@ -37,7 +37,7 @@ public class LevelTockHandler {
             }
             simpleDayLengthExtender_isFirstLevelTick = false;
 
-            if (server != null) {
+            if (server != null && gameRules != null) {
                 simpleDayLengthExtender_disableCycleWhenEmpty = SimpleDayLengthExtender.shouldDisableCycleWhenEmpty();
                 if (SimpleDayLengthExtender.CONFIG.delayTimeCycleUntilFirstJoin.get()) {
                     simpleDayLengthExtender_waitingForPlayer = true;
@@ -83,8 +83,10 @@ public class LevelTockHandler {
             // client can always check, no reason not to
             doDaylightCycle = SimpleDayLengthExtender.shouldAllowDaylightProgression(level, simpleDayLengthExtender_dayTocker, simpleDayLengthExtender_nightTocker);
         }
-        // Finally update the gamerule. Note that server is null on client, that's intentional
-        gameRules.getRule(gameruleKeyDoDaylight).set(doDaylightCycle, server);
+        // Finally update the gamerule (if server)
+        if (server != null && gameRules != null)
+            gameRules.getRule(gameruleKeyDoDaylight).set(doDaylightCycle, server);
+        return doDaylightCycle;
     }
 
     private void doTfcUpdates() {

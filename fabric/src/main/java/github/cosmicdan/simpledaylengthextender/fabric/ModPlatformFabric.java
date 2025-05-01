@@ -1,6 +1,6 @@
 package github.cosmicdan.simpledaylengthextender.fabric;
 
-import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import github.cosmicdan.simpledaylengthextender.IModPlatform;
 import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import net.minecraft.world.level.Level;
@@ -12,7 +12,7 @@ import github.cosmicdan.simpledaylengthextender.TimeTocker;
 public class ModPlatformFabric implements IModPlatform {
     @Override
     public void registerConfigCommon(ModConfigSpec spec) {
-        NeoForgeConfigRegistry.INSTANCE.register(SimpleDayLengthExtender.MOD_ID, ModConfig.Type.COMMON, spec);
+        ConfigRegistry.INSTANCE.register(SimpleDayLengthExtender.MOD_ID, ModConfig.Type.COMMON, spec);
     }
 
     @Override

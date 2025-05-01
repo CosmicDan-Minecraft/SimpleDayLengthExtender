@@ -6,12 +6,16 @@ import github.cosmicdan.simpledaylengthextender.LevelTockHandler;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ClientLevel.class)
 public abstract class ClientLevelHooks {
+    @Shadow
+    private boolean tickDayTime;
     @Unique
     LevelTockHandler sdle_$tockHandler;
     /**
@@ -22,13 +26,14 @@ public abstract class ClientLevelHooks {
      */
     @WrapOperation(
             method = "tickTime",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z")
+            at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/multiplayer/ClientLevel;tickDayTime:Z")
     )
-    public boolean onTickTimeDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
+    public boolean onTickTimeDayCycleRuleCheck(ClientLevel instance, Operation<Boolean> original) {
         if (sdle_$tockHandler == null)
             sdle_$tockHandler = new LevelTockHandler((Level)((Object)this));
-        sdle_$tockHandler.onTickTimeDayCycleRuleCheck(gameRules, gameruleKeyDoDaylight, null);
-        // always call original, our LevelTockHandler updated gameruleKeyDoDaylight
-        return original.call(gameRules, gameruleKeyDoDaylight);
+        // New to 1.21.5 - ClientLevel no longer uses the gamerule, has its own internal flag instead
+        tickDayTime = sdle_$tockHandler.onTickTimeDayCycleRuleCheck(null, null, null);
+        // always call original, we've already updated tickDayTime
+        return original.call(instance);
     }
 }
