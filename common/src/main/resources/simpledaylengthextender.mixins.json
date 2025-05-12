@@ -2,6 +2,7 @@
   "required": true,
   "package": "github.cosmicdan.simpledaylengthextender.mixin.injection",
   "compatibilityLevel": "JAVA_17",
+  "plugin" : "github.cosmicdan.simpledaylengthextender.mixin.MixinBootstrap",
   "minVersion": "0.8",
   "client": [
     "ClientLevelHooks"
