@@ -11,7 +11,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/simple-day-length-extender",
     "sources": "https://github.com/CosmicDan-Minecraft/SimpleDayLengthExtender"
   },
-  "license": "CC0-1.0",
+  "license": "LGPL-1.0",
   "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
@@ -32,6 +32,5 @@
     "forgeconfigapiport": ">=1.0.2"
   },
   "suggests": {
-    "another-mod": "*"
   }
 }
