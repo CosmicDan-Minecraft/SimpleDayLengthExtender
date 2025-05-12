@@ -58,7 +58,7 @@ public final class SimpleDayLengthExtender {
         if (MODPLATFORM.isTfcOverrideConfigured())
             timeOfDay = MODPLATFORM.getTfcTimeOfDay(level);
         else
-            timeOfDay = level.getLevelData().getDayTime();
+            timeOfDay = level.getLevelData().getDayTime() % 24000;
 
         if (timeOfDay >= nightTocker.phaseStartInTicks) {
             shouldAdvanceTime = nightTocker.shouldAdvanceTime(level);
