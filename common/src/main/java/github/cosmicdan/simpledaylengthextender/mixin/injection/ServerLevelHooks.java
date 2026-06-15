@@ -2,7 +2,9 @@ package github.cosmicdan.simpledaylengthextender.mixin.injection;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import github.cosmicdan.simpledaylengthextender.CommonConfig;
 import github.cosmicdan.simpledaylengthextender.LevelTockHandler;
+import github.cosmicdan.simpledaylengthextender.SimpleDayLengthExtender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.GameRules;
@@ -51,5 +53,17 @@ public abstract class ServerLevelHooks {
         final boolean doDaylightCycle = sdle_$tockHandler.onTickTimeDayCycleRuleCheck(gameRules, gameruleKeyDoDaylight, getServer());
         // always call original, our LevelTockHandler updated gameruleKeyDoDaylight
         return original.call(gameRules, gameruleKeyDoDaylight);
+    }
+
+    @WrapOperation(
+            method = "tick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/GameRules;getBoolean(Lnet/minecraft/world/level/GameRules$Key;)Z", ordinal = 0)
+    )
+    public boolean onTickDayCycleRuleCheck(GameRules gameRules, GameRules.Key<GameRules.BooleanValue> gameruleKeyDoDaylight, Operation<Boolean> original) {
+        if (SimpleDayLengthExtender.CONFIG.overrideGameRuleSleepCheck.get())
+            // Always return true to allow sleeping
+            return true;
+        else
+            return original.call(gameRules, gameruleKeyDoDaylight);
     }
 }
