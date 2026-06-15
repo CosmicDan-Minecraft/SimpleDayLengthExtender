@@ -17,6 +17,8 @@ public class CommonConfig {
     private static final String nightStartInTicksTxt = " Start time in ticks to use the night multiplier. 13000 represents a standard Minecraft night start of 19:00.";
     public final ForgeConfigSpec.DoubleValue nightLengthMultiplier;
     private static final String nightLengthMultiplierTxt = " Multiply the night length by this number. Fractions supported, but must be above 1.0 (cannot shorten).";
+    public final ForgeConfigSpec.BooleanValue overrideGameRuleSleepCheck;
+    private static final String overrideGameRuleSleepCheckTxt = " If true (default), the 'doDaylightCycle' gamerule check during sleep is forced to always be true. This allows sleeping to work properly. You *might* need to disable this for compatibility with some sleeping mods, but probably not.";
     public final ForgeConfigSpec.BooleanValue autoCalendarAdjustments;
     private static final String autoCalendarAdjustmentsTxt = " If true (default), some mod-added calendars/seasons will dynamically adjust day/night ratio.\n" +
             " Note that day/night length will effectively be 1.5x more than the multipliers dictate for math reasons. For example if the multipliers are set to 2.0x then \n" +
@@ -49,6 +51,9 @@ public class CommonConfig {
         nightLengthMultiplier = builder
                 .comment(nightLengthMultiplierTxt)
                 .defineInRange("nightLengthMultiplier", 2.0D, 1.0D, 100.0D);
+        overrideGameRuleSleepCheck = builder
+                .comment(overrideGameRuleSleepCheckTxt)
+                .define("overrideGameRuleSleepCheck", true);
         autoCalendarAdjustments = builder
                 .comment(autoCalendarAdjustmentsTxt)
                 .define("autoCalendarAdjustments", true);
