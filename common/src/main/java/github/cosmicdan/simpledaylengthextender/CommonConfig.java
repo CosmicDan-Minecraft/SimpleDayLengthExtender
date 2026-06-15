@@ -24,7 +24,7 @@ public class CommonConfig {
             " Note that day/night length will effectively be 1.5x more than the multipliers dictate for math reasons. For example if the multipliers are set to 2.0x then \n" +
             " the day length could be about x2.91 and night length about x1.59 depending on time of year. Keeping showDetailsToLog enabled will let you check final multipliers.\n" +
             " Also note that if the night start time is configured with the default 13000 it will be corrected to 12000 so that the day and night length difference makes sense.\n" +
-            " Currently supported mods: TerraFirmaCraft, nothing else yet (please share your requests back to me - I will very likely add Serene Seasons support)";
+            " Currently supported mods: TerraFirmaCraft 3.x and below, nothing else yet (please share your requests back to me - I don't know of any other mods that have variable day/night lengths).";
     public final ForgeConfigSpec.BooleanValue showDetailsToLog;
     private static final String showDetailsToLogTxt = " If true (default), details of day/night length will be logged to console. Setting to false might be useful to reduce log spam, especially\n" +
             " if autoCalendarAdjustments are in effect since it would make semi-regular log entries whenever calendar adjustments occur throughout the year/seasons.";
