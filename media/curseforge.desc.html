@@ -1,17 +1,21 @@
 <h2>⏱️ About</h2>
-<p>A simple, very-compatible mod to extend the day and/or night length in Minecraft. Unlike some other similar mods, it works by internally switching the doDaylightCycle rule on/off which should be more compatible with mods such as TerrafirmaCraft.</p><br/>
+<p>A simple, very-compatible mod to extend the day and/or night length in Minecraft. Unlike some other similar mods, it works by internally switching the doDaylightCycle rule on/off which is more compatible, along with special support for TerrafirmaCraft. (Note: TFC 3.x and older only. TFC 4.x for 1.21.1 now has its own setting for day length, so this mod is not relevent in that case).</p><br/>
 <br/>
-<h5>💡 <em>1.2.0 is finally released which fixes the desync (judder/stutter), has ports for more MC versions, and adds support for variable day/night length ratio based on Calendar in TerraFirmaCraft (thanks to alekiponi for working on this). Maybe support for Serene Seasons next...?</em></h5>
+<h5>💡 <em>1.2.0 is finally released which fixes the desync (judder/stutter), has ports for more MC versions, and adds support for variable day/night length ratio based on Calendar in TerraFirmaCraft 3.x and below (thanks to alekiponi for working on this).</em></h5>
 <br/>
 <h2>📜 Changelogs (Update history)</h2>
 <br/>
 <div class="spoiler"><p>
+<h5>1.2.2</h5>
+ - Fix beds not working reliably when Sleeping Overhaul 2 wasn't installed. Yet another ooops.<br/>
+ - Update 'latest' branch to 1.21.10
+<br/>
 <h5>1.2.1</h5>
  - Fix regression: time extension for when day and night multipliers are different (oops again, sorry xD) - thanks to sl-einert for reporting.<br/>
 <br/>
 <h5>1.2.0</h5>
  - Fixed the desync (judder or stutter) of time. This was caused by the incorrect assumption that Minecraft would synchronize with clients.<br/>
- - Added feature to automatically adjust day/night length depending on the calendar/season (time of year) for mods. Currently only supports TerraFirmaCraft calendar, will likely add Serene Seasons support later. Thanks to alekiponi for working on this feature.<br/>
+ - Added feature to automatically adjust day/night length depending on the calendar/season (time of year) for mods. Currently only supports TerraFirmaCraft calendar, I don't know of any other calendars that would need it (let me know if you found one). Thanks to alekiponi for working on this feature.<br/>
  - [Forge] Config is moved to common file under the normal config folder instead of being per-world, and is now the same for all worlds. This was required for desync fix.<br/>
  - Changed default multipliers to 2.0x since that seems most common<br/>
 <br/>
@@ -65,11 +69,13 @@ Using a multiplier of x2.0 for Night time
 <br/><strong>nightStartInTicks:</strong><br/>
  - Start time in ticks to use the night multiplier. <br/>
  - Default value of 13000 represents a standard Minecraft night start of 19:00.<br/>
+<br/><strong>overrideGameRuleSleepCheck:</strong><br/>
+ - If true (default), the 'doDaylightCycle' gamerule check during sleep is forced to always be true. This allows sleeping to work properly. You *might* need to disable this for compatibility with some sleeping mods, but probably not.<br/>
 <br/><strong>autoCalendarAdjustments:</strong><br/>
  - If true (default), some mod-added calendars/seasons will dynamically adjust day/night ratio.<br/>
  - Note that day/night length will effectively be 1.5x more than the multipliers dictate for math reasons. For example if the multipliers are set to 2.0x then the day length could be about x2.91 and night length about x1.59 depending on time of year. Keeping showDetailsToLog enabled will let you check final multipliers.<br/>
  - Also note that if the night start time is configured with the default 13000 it will be corrected to 12000 so that the day and night length difference makes sense.<br/>
- - Currently supported mods: TerraFirmaCraft, nothing else yet (please share your requests back to me - I will very likely add Serene Seasons support)<br/>
+ - Currently supported mods: TerraFirmaCraft 3.x and below, nothing else yet (please share your requests back to me - I don't know of any other mods that have variable day/night lengths).<br/>
 <br/><strong>showDetailsToLog:</strong><br/>
  - If true (default), details of day/night length will be logged to console. Setting to false might be useful to reduce log spam, especially if autoCalendarAdjustments are in effect since it would make semi-regular log entries whenever calendar adjustments occur throughout the year/seasons.<br/>
 </p></div>
